@@ -22,7 +22,4 @@ public class UserDTOOUT {
     // username
     private String username;
 
-    // password
-    private String password;
-
 }

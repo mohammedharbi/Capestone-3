@@ -1,6 +1,7 @@
 package com.example.wiqaya.Controller;
 
 import com.example.wiqaya.ApiResponse.ApiResponse;
+import com.example.wiqaya.DTO.IN.UserDTOIN;
 import com.example.wiqaya.Model.User;
 import com.example.wiqaya.Service.UserService;
 import jakarta.validation.Valid;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/wiqaya/user")
 @RequiredArgsConstructor
 public class UserController {
-
     private final UserService userService;
 
     @GetMapping("/get")
@@ -21,13 +21,13 @@ public class UserController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> addUser(@RequestBody @Valid User user){
+    public ResponseEntity<?> addUser(@RequestBody @Valid UserDTOIN user){
         userService.addUser(user);
         return ResponseEntity.status(200).body(new ApiResponse("User added"));
     }
 
     @PutMapping("/update/user-id/{id}")
-    public ResponseEntity<?> updateUser(@PathVariable Integer id,@RequestBody @Valid User user){
+    public ResponseEntity<?> updateUser(@PathVariable Integer id,@RequestBody @Valid UserDTOIN user){
         userService.updateUser(id,user);
         return ResponseEntity.status(200).body(new ApiResponse("User Updated"));
     }
