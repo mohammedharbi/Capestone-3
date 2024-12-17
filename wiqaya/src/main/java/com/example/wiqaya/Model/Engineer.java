@@ -57,4 +57,8 @@ public class Engineer {
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "engineer")
 //    private Set<RequestInspection> requestInspections;
 
+
+    @OneToMany(cascade = CascadeType.ALL,mappedBy ="engineer" )
+    private Set<Report> reports;
+
 }
