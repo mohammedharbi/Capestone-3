@@ -46,4 +46,11 @@ public class RequestInspectionController {
         return ResponseEntity.status(200).body(requestInspectionService.isEngineerAvailable(date));
     }
 
+    @PutMapping("assign-eng/adminId/{adminId}/engId/{engId}/requestInspectionId/{requestInspectionId}")
+    public ResponseEntity assignEng(@PathVariable Integer adminId,@PathVariable Integer engId,@PathVariable Integer requestInspectionId) {
+        requestInspectionService.assignEng(adminId,engId,requestInspectionId);
+        return ResponseEntity.status(200).body(new ApiResponse("request inspection assigned to an engineer"));
+    }
+
+
 }

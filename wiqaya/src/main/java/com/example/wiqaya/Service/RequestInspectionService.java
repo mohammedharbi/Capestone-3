@@ -2,6 +2,7 @@ package com.example.wiqaya.Service;
 
 import com.example.wiqaya.ApiResponse.ApiException;
 import com.example.wiqaya.DTO.IN.RequestInspectionDTOIN;
+import com.example.wiqaya.DTO.OUT.RequestInspectionDTOOUT;
 import com.example.wiqaya.Model.Engineer;
 import com.example.wiqaya.Model.House;
 import com.example.wiqaya.Model.RequestInspection;
@@ -26,8 +27,31 @@ public class RequestInspectionService {
     private final UserRepository userRepository;
     private final EngineerRepository engineerRepository;
 
-    public List<RequestInspection> getRequestInspection(Integer adminId) {
-        return requestInspectionRepository.findAll();
+    public List<RequestInspectionDTOOUT> getRequestInspection(Integer adminId) {
+        User user = userRepository.findUserById(adminId);
+        if(user == null || user.getRole().equals("user")){
+            throw new ApiException("Not authorized User");
+        }
+        List<RequestInspection> requestInspections = requestInspectionRepository.findAll();
+        List<RequestInspectionDTOOUT> requestInspectionDTOOUTS = new ArrayList<>();
+        for (RequestInspection r : requestInspections){
+            Integer house_id = r.getHouse().getId();
+            String houseStatus = r.getHouse().getStatus();
+            String houseType = r.getHouse().getType();
+            String city = r.getHouse().getCity();
+            String engName;
+            String engPhoneNumber;
+            if(r.getEngineer()==null){
+                engName = "No Engineer assign" ;
+                engPhoneNumber = "-";
+            } else {
+                engName = r.getEngineer().getFullName();
+                engPhoneNumber = r.getEngineer().getPhoneNumber();
+            }
+            RequestInspectionDTOOUT requestInspectionDTOOUT = new RequestInspectionDTOOUT(r.getId(),r.getDate(),r.getStatus(),house_id,houseStatus,houseType,city,engName,engPhoneNumber);
+            requestInspectionDTOOUTS.add(requestInspectionDTOOUT);
+        }
+        return requestInspectionDTOOUTS;
     }
 
     public void addRequestInspection(Integer user_id, Integer house_id, RequestInspectionDTOIN requestInspectionDTOIN) {
@@ -44,6 +68,7 @@ public class RequestInspectionService {
             throw new ApiException("user doesn't own the house");
         }
         RequestInspection requestInspection = new RequestInspection(null, requestInspectionDTOIN.getDate(), "Pending", null, house, null);
+        requestInspectionRepository.save(requestInspection);
     }
 
     // is there any need to update a request ??
@@ -80,13 +105,67 @@ public class RequestInspectionService {
             throw new ApiException("engineers not found");
         }
 
+        //flow 1
+//        List<Engineer> availableEngineers = new ArrayList<>();
+//        for (Engineer engineer : engineers) {
+//            Integer requestsForDate = requestInspectionRepository.countByEngineerAndDate(engineer, date);
+//            if (requestsForDate < 5) {
+//                availableEngineers.add(engineer);
+//            }
+//        }
+        //flow 2
+//        List<Engineer> availableEngineers = requestInspectionRepository.findAvailableEngineersForDate(date);
+
+        //flow 3
         List<Engineer> availableEngineers = new ArrayList<>();
         for (Engineer engineer : engineers) {
-            Integer requestsForDate = requestInspectionRepository.countByEngineerAndDate(engineer, date);
-            if (requestsForDate < 5) {
+            Integer countEngineer = 0;
+            for (RequestInspection requestInspection : requestInspections) {
+                if (requestInspection.getDate().equals(date)) {
+                    if (requestInspection.getEngineer().getId().equals(engineer.getId())) {
+                         countEngineer ++;
+                    }
+                }
+            }
+            if (countEngineer < 5){
                 availableEngineers.add(engineer);
             }
         }
         return availableEngineers;
+    }
+
+    public void assignEng(Integer adminId, Integer engId, Integer requestInspectionId){
+        User admin = userRepository.findUserById(adminId);
+        if (admin == null) {throw new ApiException("user not found");}
+        if (!admin.getRole().equalsIgnoreCase("admin")){throw new ApiException("Not Authorized user");}
+
+        RequestInspection requestInspection = requestInspectionRepository.findRequestInspectionById(requestInspectionId);
+        if (requestInspection == null) {throw new ApiException("requestInspection not found");}
+
+        Engineer engineer = engineerRepository.findEngineerById(engId);
+        if (engineer == null) {throw new ApiException("engineer not found");}
+
+        House house = houseRepository.findHouseById(requestInspection.getHouse().getId());
+        if (house == null) {throw new ApiException("house not found");}
+        if (house.getStatus().equalsIgnoreCase("pending_inspection") || house.getStatus().equalsIgnoreCase("checked")){
+            throw new ApiException("inspection already assigned for this house");
+        }
+
+        // Assign engineer to request inspection
+        requestInspection.setEngineer(engineer);
+        requestInspection.setStatus("AssignedToEnginner");
+
+        // Update house status
+        house.setStatus("pending_inspection");
+
+//        // Update engineer's list of inspections
+//        engineer.getRequestInspections().add(requestInspection);
+
+
+        requestInspectionRepository.save(requestInspection);
+        engineerRepository.save(engineer);
+        houseRepository.save(house);
+
+
     }
 }

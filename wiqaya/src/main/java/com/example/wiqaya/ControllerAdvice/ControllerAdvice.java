@@ -6,6 +6,7 @@ import jakarta.validation.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.http.converter.HttpMessageNotWritableException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -70,5 +71,10 @@ public class ControllerAdvice {
         return ResponseEntity.status(400).body(msg);
     }
 
+    @ExceptionHandler(value = HttpMessageNotWritableException.class)
+    public ResponseEntity HttpMessageNotWritableException(HttpMessageNotWritableException e) {
+        String msg = e.getMessage();
+        return ResponseEntity.status(400).body(msg);
+    }
 
 }

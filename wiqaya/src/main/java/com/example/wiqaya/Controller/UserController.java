@@ -45,4 +45,9 @@ public class UserController {
     }
 
     // --------------------------------------------------
+    @PutMapping("verified-eng/userId/{userId}/engId/{engId}/status/{status}")
+    public ResponseEntity verifiedEng(@PathVariable Integer userId, @PathVariable Integer engId, @PathVariable String status){
+        userService.verifiedEng(userId,engId,status);
+        return ResponseEntity.status(200).body(new ApiResponse("engineer verified"));
+    }
 }

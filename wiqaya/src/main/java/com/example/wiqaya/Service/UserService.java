@@ -77,13 +77,14 @@ public class UserService {
      if(engineer==null){
          throw new ApiException("Engineer not found");
      }
-     if(!status.equalsIgnoreCase("Approved") || !status.equalsIgnoreCase("Rejected")){
-       throw new ApiException("Invalid status");
-     }
+        if (!status.equalsIgnoreCase("Approved") && !status.equalsIgnoreCase("Rejected")) {
+            throw new ApiException("Invalid status. Status must be 'Approved' or 'Rejected'.");
+        }
         engineer.setStatus(status);
      if(status.equalsIgnoreCase("Approved")){
          engineer.setAvailability(true);
      }
+     engineerRepository.save(engineer);
     }
 
     // Endpoint No.2
