@@ -3,7 +3,9 @@ package com.example.wiqaya.Service;
 import com.example.wiqaya.ApiResponse.ApiException;
 import com.example.wiqaya.DTO.IN.UserDTOIN;
 import com.example.wiqaya.DTO.OUT.UserDTOOUT;
+import com.example.wiqaya.Model.Engineer;
 import com.example.wiqaya.Model.User;
+import com.example.wiqaya.Repository.EngineerRepository;
 import com.example.wiqaya.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,7 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final EngineerRepository engineerRepository;
 
     // get all users
     public List<UserDTOOUT> getAllUsers(){
@@ -58,4 +61,31 @@ public class UserService {
       userRepository.delete(user); // delete the user
     }
 
+    // -----------------
+
+    // // Endpoint No.1
+    // admin check Eng isVerified
+    public void verifiedEng(Integer userId,Integer engId,String status){
+     User user = userRepository.findUserById(userId);
+     if(user==null){
+        throw new ApiException("User not found");
+     }
+     if(user.getRole().equals("user")){
+         throw new ApiException("Not Authorized user");
+        }
+        Engineer engineer = engineerRepository.findEngineerById(engId);
+     if(engineer==null){
+         throw new ApiException("Engineer not found");
+     }
+     if(!status.equalsIgnoreCase("Approved") || !status.equalsIgnoreCase("Rejected")){
+       throw new ApiException("Invalid status");
+     }
+        engineer.setStatus(status);
+     if(status.equalsIgnoreCase("Approved")){
+         engineer.setAvailability(true);
+     }
+    }
+
+    // Endpoint No.2
+    // assign eng to a requestInspection
 }

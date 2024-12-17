@@ -46,4 +46,12 @@ public class UserController {
 
     // --------------------------------------------------
 
+    // // Endpoint No.1
+    // admin check Eng isVerified
+    @PutMapping("/verified/eng/user-id/{user_id}/eng-id/{eng_id}/status/{status}")
+    public ResponseEntity<?> verifiedEng(@PathVariable Integer user_id,@PathVariable Integer eng_id,@PathVariable String status){
+        userService.verifiedEng(user_id,eng_id,status);
+        return ResponseEntity.status(200).body(new ApiResponse("Check Engineer done"));
+    }
+
 }
