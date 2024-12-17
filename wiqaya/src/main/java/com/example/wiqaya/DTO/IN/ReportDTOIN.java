@@ -47,6 +47,6 @@ public class ReportDTOIN {
 
     private String requiredItems;
 
-
+    private Boolean isPublished;
 
 }

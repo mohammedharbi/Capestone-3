@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+
 @RestController
 @RequestMapping("/api/v1/wiqaya/request-inspection")
 @RequiredArgsConstructor
@@ -37,6 +39,11 @@ public class RequestInspectionController {
     public ResponseEntity deleteRequestInspection(@PathVariable Integer id) {
         requestInspectionService.deleteRequestInspection(id);
         return ResponseEntity.status(200).body(new ApiResponse("request inspection deleted"));
+    }
+
+    @GetMapping("/get-available-engineer/date/{date}")
+    public ResponseEntity getAvailableEngineerDate(@PathVariable LocalDate date) {
+        return ResponseEntity.status(200).body(requestInspectionService.isEngineerAvailable(date));
     }
 
 }

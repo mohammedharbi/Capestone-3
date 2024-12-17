@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.*;
+import org.hibernate.annotations.CurrentTimestamp;
 
 import java.time.LocalDate;
 import java.util.Set;
@@ -70,6 +71,9 @@ public class Report {
 
     @Column(columnDefinition = "timestamp not null default current_timestamp")
     private LocalDate ReportedDate;
+
+    @Column(columnDefinition = "varchar(11) ")
+    private Boolean isPublished;
 
     @ManyToOne
     @JoinColumn(name="engineer_id",referencedColumnName = "id")

@@ -63,6 +63,8 @@ public class ReportService {
         // Calculate percentage (based on the 8 boolean values)
         int percentage = (trueCount * 100) / 8;
         House house=requestInspection.getHouse();
+        // add set for condaition
+        // add set for status
 
         Report report = new Report(
                 null, // ID
@@ -77,10 +79,11 @@ public class ReportService {
                 percentage, // Set the percentage here
                 reportDTOIN.getNotes(),
                 reportDTOIN.getRequiredItems(),
-                LocalDate.now() // Set the ReportedDate as the current date
+                LocalDate.now(), // Set the ReportedDate as the current date
+                reportDTOIN.getIsPublished()
                 ,engineer,house,
                 null, // the offers are null when the report is added
-                requestInspection
+                requestInspection// set reported
         );
 
         // Save the report to the database
