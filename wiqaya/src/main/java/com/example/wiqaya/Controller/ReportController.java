@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class ReportController {
 private final ReportService reportService;
+
     @GetMapping("/get-all")
     public ResponseEntity getAll(){
         return ResponseEntity.status(200).body( reportService.getAll());

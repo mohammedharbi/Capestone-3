@@ -23,35 +23,35 @@ public class Report {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @AssertTrue
+
     @Column(columnDefinition = "boolean not null")
     private Boolean structuralElements;
 
-    @AssertTrue
+
     @Column(columnDefinition = "boolean not null")
     private Boolean fireDetection;
 
-    @AssertTrue
+
     @Column(columnDefinition = "boolean not null")
     private Boolean  electricalDange;
 
-    @AssertTrue
+
     @Column(columnDefinition = "boolean not null")
     private Boolean  heatingCookingSystems;
 
-    @AssertTrue
+
     @Column(columnDefinition = "boolean not null")
     private Boolean  emergencyPreparedness;
 
-    @AssertTrue
+
     @Column(columnDefinition = "boolean not null")
     private Boolean  hazardousMaterialsMtorage;
 
-    @AssertTrue
+
     @Column(columnDefinition = "boolean not null")
     private Boolean  ventilationSmokeManagement;
 
-    @AssertTrue
+
     @Column(columnDefinition = "boolean not null")
     private Boolean  exteriorSurroundings;
 
@@ -66,7 +66,6 @@ public class Report {
 
     @Column(columnDefinition = "varchar(200)")
     private String requiredItems;
-
 
     @Column(columnDefinition = "timestamp not null default current_timestamp")
     private LocalDate ReportedDate;

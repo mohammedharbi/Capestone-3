@@ -23,10 +23,11 @@ public class ReportService {
 
     public List<ReportDTOOUT> getAll(){
         List<Report>reports=reportRepository.findAll();
+        if(reports.isEmpty())throw new ApiException("there is no report");
 
         List<ReportDTOOUT> dtos=new ArrayList<>();
         for(Report r:reports){
-            ReportDTOOUT reportDTOOUT =new ReportDTOOUT(r.getId(),r.getEngineer(),r.getStructuralElements(),r.getFireDetection(),r.getHeatingCookingSystems(),r.getEmergencyPreparedness(),r.getVentilationSmokeManagement()
+            ReportDTOOUT reportDTOOUT =new ReportDTOOUT(r.getId(),r.getEngineer().getId(),r.getStructuralElements(),r.getFireDetection(),r.getHeatingCookingSystems(),r.getEmergencyPreparedness(),r.getVentilationSmokeManagement()
             ,r.getExteriorSurroundings(),r.getPercentage(),r.getNotes(),r.getRequiredItems(),r.getReportedDate());
             dtos.add(reportDTOOUT);
         }
@@ -35,9 +36,11 @@ public class ReportService {
 
 
     public void add(Integer engineerId ,ReportDTOIN reportDTOIN){
-
         Engineer engineer=engineerRepository.findEngineerById(engineerId);
         if(engineer==null)throw new ApiException("there is no engineer found");
+
+
+        //****** check if the
 
         int percentage =1;
         Report report = new Report(

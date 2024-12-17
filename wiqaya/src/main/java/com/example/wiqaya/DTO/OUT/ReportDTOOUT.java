@@ -19,7 +19,7 @@ import java.time.LocalDate;
 public class ReportDTOOUT {
 
     private Integer id;
-    private Engineer engineer;
+    private Integer engineerId;
 
     private Boolean structuralElements;
     private Boolean fireDetection;
