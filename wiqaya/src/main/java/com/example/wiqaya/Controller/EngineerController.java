@@ -17,7 +17,7 @@ public class EngineerController {
 
     @GetMapping("/get")
     public ResponseEntity getEngineers(){
-        return ResponseEntity.status(200).body(engineerService.findAllEngineers());
+        return ResponseEntity.status(200).body(engineerService.getAllEngineers());
     }
 
     @PostMapping("/add")
