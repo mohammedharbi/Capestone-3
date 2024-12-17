@@ -32,11 +32,6 @@ public class Offer {
     private Double price;
 
 //    @ManyToOne
-//    private Offer offer;
-
-    // here  ,, many offers for one report
-    @ManyToOne
-    private Report report;
 
 //    @ManyToOne
 //    @JsonIgnore
