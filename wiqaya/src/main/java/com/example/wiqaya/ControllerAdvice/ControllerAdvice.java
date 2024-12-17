@@ -16,14 +16,14 @@ import java.sql.SQLIntegrityConstraintViolationException;
 public class ControllerAdvice {
 
     @ExceptionHandler(value = ApiException.class)
-    public ResponseEntity ApiException(ApiException exception) {
+    public ResponseEntity<?> ApiException(ApiException exception) {
         String message = exception.getMessage();
         return ResponseEntity.status(400).body(message);
     }
 
 
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
-    public ResponseEntity MethodArgumentNotValidException(MethodArgumentNotValidException e) {
+    public ResponseEntity<?> MethodArgumentNotValidException(MethodArgumentNotValidException e) {
         String msg = e.getFieldError().getDefaultMessage();
         return ResponseEntity.status(400).body(new ApiResponse(msg));
     }
