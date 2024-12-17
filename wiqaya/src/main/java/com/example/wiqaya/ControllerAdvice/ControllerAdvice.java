@@ -2,6 +2,7 @@ package com.example.wiqaya.ControllerAdvice;
 
 import com.example.wiqaya.ApiResponse.ApiException;
 import com.example.wiqaya.ApiResponse.ApiResponse;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -61,6 +62,12 @@ public class ControllerAdvice {
     public ResponseEntity<ApiResponse> NullPointerException(NullPointerException e) {
         String msg = e.getMessage();
         return ResponseEntity.status(400).body(new ApiResponse(msg));
+    }
+
+    @ExceptionHandler(value = ConstraintViolationException.class)
+    public ResponseEntity<?> ConstraintViolationException(ConstraintViolationException e){
+        String msg = e.getMessage();
+        return ResponseEntity.status(400).body(msg);
     }
 
 

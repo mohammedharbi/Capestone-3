@@ -20,14 +20,10 @@ public class House {
     private Integer id;
 
     // City
-    @NotEmpty(message = "City cannot be empty")
-    @Size(min = 5, max = 30, message = "City name must be between 5 and 30 characters")
     @Column(columnDefinition = "varchar(30) not null")
     private String city;
 
     // location
-    @NotEmpty(message = "Location cannot be empty")
-    @Size(max = 50, message = "Location cannot exceed 50 characters")
     @Column(columnDefinition = "varchar(50) not null")
     private String location;
 
@@ -38,8 +34,6 @@ public class House {
     private Integer conditionPercentage;
 
     // house type
-    @NotEmpty(message = "Type cannot be empty")
-    @Pattern(regexp = "^(Villa|Apartment|Duplex|Floor|Traditional House)$", message = "Type must be one of the following: Villa, Apartment, Duplex, Floor, or Traditional House")
     @Column(columnDefinition = "varchar(30) not null")
     private String type;
 
@@ -50,10 +44,9 @@ public class House {
     //    offers_pending,     // Reviewing safety company offers
     //    offer_accepted,     // Chosen safety company starts work
     //    Completed           // Safety work completed
-    @Pattern(regexp = "^(un checked|pending_inspection|inspected|offers_pending|offer_accepted|completed)$", message = "Status must be one of the following: new, pending_inspection, inspected, offers_pending, offer_accepted, or completed")
+    @Pattern(regexp = "^(un_checked|pending_inspection|inspected|offers_pending|offer_accepted|completed)$", message = "Status must be one of the following: un_checked, pending_inspection, inspected, offers_pending, offer_accepted, or completed")
     @Column(columnDefinition = "varchar(20) not null")
-    private String status; // Default value
-
+    private String status; // Default value "un checked"
 
     @ManyToOne
     @JsonIgnore

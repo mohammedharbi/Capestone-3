@@ -19,9 +19,10 @@ public class UserService {
 
     // get all users
     public List<UserDTOOUT> getAllUsers(){
-     List<User> users = userRepository.findAll();
+        List<User> users = userRepository.findByRole("user"); // well get the users only (not the admin)
      List<UserDTOOUT> userDTOOUTS = new ArrayList<>();
      for (User u : users){
+
        UserDTOOUT userDTOOUT = new  UserDTOOUT(u.getName(),u.getEmail(),u.getPhoneNumber(),u.getUsername());
        userDTOOUTS.add(userDTOOUT);
      }
@@ -36,25 +37,25 @@ public class UserService {
 
     // update existing user info
     public void updateUser(Integer id,UserDTOIN userDTOIN){
-      User oldUser = userRepository.findUserById(id);
+      User oldUser = userRepository.findUserById(id); // check user is existed !
       if(oldUser==null){
           throw new ApiException("User not found!");
-      }
+      } // update user info
       oldUser.setName(userDTOIN.getName());
       oldUser.setEmail(userDTOIN.getEmail());
       oldUser.setUsername(userDTOIN.getUsername());
       oldUser.setPassword(userDTOIN.getPassword());
       oldUser.setPhoneNumber(userDTOIN.getPhoneNumber());
-      userRepository.save(oldUser);
+      userRepository.save(oldUser); // save the user to the DB
     }
 
     // delete user
     public void deleteUser(Integer id){
-      User user = userRepository.findUserById(id);
+      User user = userRepository.findUserById(id); // check user is existed !
       if(user==null){
           throw new ApiException("User not found!");
       }
-      userRepository.delete(user);
+      userRepository.delete(user); // delete the user
     }
 
 }

@@ -4,10 +4,7 @@ package com.example.wiqaya.Service;
 import com.example.wiqaya.ApiResponse.ApiException;
 import com.example.wiqaya.DTO.IN.ReportDTOIN;
 import com.example.wiqaya.DTO.OUT.ReportDTOOUT;
-import com.example.wiqaya.Model.Engineer;
-import com.example.wiqaya.Model.House;
-import com.example.wiqaya.Model.Report;
-import com.example.wiqaya.Model.RequestInspection;
+import com.example.wiqaya.Model.*;
 import com.example.wiqaya.Repository.EngineerRepository;
 import com.example.wiqaya.Repository.ReportRepository;
 import com.example.wiqaya.Repository.RequestInspectionRepository;
@@ -81,7 +78,9 @@ public class ReportService {
                 reportDTOIN.getNotes(),
                 reportDTOIN.getRequiredItems(),
                 LocalDate.now() // Set the ReportedDate as the current date
-                ,engineer,house,requestInspection
+                ,engineer,house,
+                null, // the offers are null when the report is added
+                requestInspection
         );
 
         // Save the report to the database

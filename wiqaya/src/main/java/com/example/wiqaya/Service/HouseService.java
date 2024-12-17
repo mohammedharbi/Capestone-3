@@ -25,7 +25,8 @@ public class HouseService {
         List<House> houses = houseRepository.findAll();
         List<HouseDTOOUT> houseDTOOUTS = new ArrayList<>();
         for (House h : houses){
-          HouseDTOOUT houseDTOOUT = new HouseDTOOUT(h.getCity(),h.getLocation(),h.getConditionPercentage(),h.getType(),h.getStatus());
+          String username = h.getUser().getUsername(); // get username via house model to reach his username
+          HouseDTOOUT houseDTOOUT = new HouseDTOOUT(h.getCity(),h.getLocation(),h.getConditionPercentage(),h.getType(),h.getStatus(),username);
           houseDTOOUTS.add(houseDTOOUT);
         }
         return houseDTOOUTS;
@@ -37,7 +38,8 @@ public class HouseService {
        if(user==null){
            throw new ApiException("User not found");
        }
-       House house = new House(null,houseDTOIN.getCity(),houseDTOIN.getLocation(),null,houseDTOIN.getType(),"un checked ",user,null,null);
+       House house = new House(null,houseDTOIN.getCity(),houseDTOIN.getLocation(),0 // i put it 0 cuz it give me an error (Column 'condition_percentage' cannot be null)
+               ,houseDTOIN.getType(),"un_checked",user,null,null);
       houseRepository.save(house);
     }
 
@@ -47,9 +49,9 @@ public class HouseService {
         if(oldHouse==null){
             throw new ApiException("House not found");
         }
-        oldHouse.setCity(house.getCity());
-        oldHouse.setType(house.getType());
-        oldHouse.setLocation(house.getLocation());
+        oldHouse.setCity(house.getCity().trim());
+        oldHouse.setType(house.getType().trim());
+        oldHouse.setLocation(house.getLocation().trim());
         houseRepository.save(oldHouse);
     }
 

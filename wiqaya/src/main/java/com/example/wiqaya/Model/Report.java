@@ -85,6 +85,10 @@ public class Report {
 //    @OneToMany(cascade = CascadeType.ALL , mappedBy = "report")
 //    private Set<Offer> requestInspections;
 
+    // here
+    // one report have set of offers
+    @OneToMany(cascade = CascadeType.ALL , mappedBy = "report")
+    private Set<Offer> offers;
 
     @OneToOne
     @MapsId

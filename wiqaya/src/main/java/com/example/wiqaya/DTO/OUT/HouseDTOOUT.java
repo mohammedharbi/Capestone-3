@@ -20,6 +20,8 @@ public class HouseDTOOUT {
     // house type
     private String type;
 
+    // status of the house .. default "un_checked"
     private String status;
 
+    private String username;
 }
