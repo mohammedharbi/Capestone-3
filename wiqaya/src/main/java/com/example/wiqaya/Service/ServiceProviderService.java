@@ -31,7 +31,7 @@ private  final ServiceProviderRepository serviceProviderRepository;
     public void add(ServiceProviderDTOIN serviceProviderDTOIN){
         ServiceProvider serviceProvider = new ServiceProvider(null,
                 serviceProviderDTOIN.getName(),serviceProviderDTOIN.getEmail(), serviceProviderDTOIN.getPhoneNumber(),
-                serviceProviderDTOIN.getCommercialRegistration(),"Inactive",0,0.0);
+                serviceProviderDTOIN.getCommercialRegistration(),"Inactive",0,0.0,null,null);
         serviceProviderRepository.save(serviceProvider);
     }
 

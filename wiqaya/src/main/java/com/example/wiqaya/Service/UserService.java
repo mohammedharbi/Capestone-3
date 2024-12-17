@@ -19,11 +19,11 @@ public class UserService {
 
     // get all users
     public List<UserDTOOUT> getAllUsers(){
-        List<User> users = userRepository.findByRole("user"); // well get the users only (not the admin)
+        List<User> users = userRepository.findUserByRole(); // well get the users only (not the admin)
      List<UserDTOOUT> userDTOOUTS = new ArrayList<>();
      for (User u : users){
 
-       UserDTOOUT userDTOOUT = new  UserDTOOUT(u.getName(),u.getEmail(),u.getPhoneNumber(),u.getUsername());
+       UserDTOOUT userDTOOUT = new  UserDTOOUT(u.getId(),u.getName(),u.getEmail(),u.getPhoneNumber(),u.getUsername());
        userDTOOUTS.add(userDTOOUT);
      }
         return userDTOOUTS;

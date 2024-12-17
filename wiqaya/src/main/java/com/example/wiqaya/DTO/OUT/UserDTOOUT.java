@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserDTOOUT {
 
+    private Integer id;
+
     // name
     private String name;
 

@@ -37,4 +37,9 @@ public class Offer {
     @JsonIgnore
     @JoinColumn(name = "serviceprovider_id", referencedColumnName = "id")
     private ServiceProvider serviceProvider;
+
+
+    // here  ,, many offers for one report
+    @ManyToOne
+    private Report report;
 }
