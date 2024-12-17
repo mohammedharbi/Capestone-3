@@ -1,6 +1,7 @@
 package com.example.wiqaya.Controller;
 
 import com.example.wiqaya.ApiResponse.ApiResponse;
+import com.example.wiqaya.DTO.IN.RequestInspectionDTOIN;
 import com.example.wiqaya.Model.RequestInspection;
 import com.example.wiqaya.Service.RequestInspectionService;
 import jakarta.validation.Valid;
@@ -20,9 +21,9 @@ public class RequestInspectionController {
         return ResponseEntity.status(200).body(requestInspectionService.getRequestInspection());
     }
 
-    @PostMapping("/add")
-    public ResponseEntity addRequestInspection(@RequestBody @Valid RequestInspection requestInspection) {
-        requestInspectionService.addRequestInspection(requestInspection);
+    @PostMapping("/add/user_id/{user_id}/house_id/{house_id}")
+    public ResponseEntity addRequestInspection(@PathVariable Integer user_id,@PathVariable Integer house_id,@RequestBody @Valid RequestInspectionDTOIN requestInspectionDTOIN) {
+        requestInspectionService.addRequestInspection(user_id,house_id,requestInspectionDTOIN);
         return ResponseEntity.status(200).body(new ApiResponse("request inspection added"));
     }
 

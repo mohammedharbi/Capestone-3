@@ -31,8 +31,6 @@ public class Offer {
     @Column(columnDefinition = "double not null")
     private Double price;
 
-//    @ManyToOne
-
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "serviceprovider_id", referencedColumnName = "id")

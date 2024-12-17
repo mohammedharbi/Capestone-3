@@ -24,7 +24,7 @@ public class RequestInspection {
     @Column(nullable = false, updatable = false)
     private LocalDate date;
 
-    @Pattern(regexp = "^(Reported|Pending)$", message = "Request inspection status must be either 'Reported' or 'Pending'")
+    @Pattern(regexp = "^(Reported|Pending|AssignedToEnginner)$", message = "Request inspection status must be either 'Reported' or 'Pending'")
     @Column(columnDefinition = "varchar(8) ")
     private String status ; // it will be 'Pending' by default therefore no need for @NotEmpty. the Engineer will be assigned and accept the request, after checking the Home condition the status can be changed to 'Reported'
 
