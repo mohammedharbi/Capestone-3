@@ -25,4 +25,11 @@ public class ReportController {
         reportService.add(engineerId,RequestInspectionId,reportDTOIN);
         return ResponseEntity.status(200).body(new ApiResponse("report created successfully"));
     }
+
+
+    @DeleteMapping ("/delete/report-id/{id}")
+    public ResponseEntity<?> delete(@PathVariable Integer id){
+        reportService.delete(id);
+        return ResponseEntity.status(200).body(new ApiResponse("report deleted"));
+    }
 }

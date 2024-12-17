@@ -87,6 +87,17 @@ public class ReportService {
         reportRepository.save(report);
     }
 
+
+    // delete report
+    public void delete(Integer id){
+        Report report = reportRepository.findReportById(id);
+        if(report==null){
+            throw new ApiException("report not found");
+        }
+        reportRepository.delete(report);
+    }
+
+
 //    // Method to assign an engineer to a report
 //    public Report assignEngineerToReport(Integer reportId, Integer engineerId) {
 //        // Retrieve the report by ID

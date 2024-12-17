@@ -1,5 +1,6 @@
 package com.example.wiqaya.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
@@ -33,8 +34,10 @@ public class Review {
     @ManyToOne
     private User user;
 
-    // many reviews for one ServiceProvide
-//    @ManyToOne
-//    private ServiceProvider serviceProvider;
+
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "serviceprovider_id", referencedColumnName = "id")
+    private ServiceProvider serviceProvider;
 
 }

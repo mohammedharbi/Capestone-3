@@ -33,8 +33,8 @@ public class Offer {
 
 //    @ManyToOne
 
-//    @ManyToOne
-//    @JsonIgnore
-//    @JoinColumn(name = "serviceprovider_id", referencedColumnName = "id")
-//    private ServiceProvider serviceProvider;
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "serviceprovider_id", referencedColumnName = "id")
+    private ServiceProvider serviceProvider;
 }
