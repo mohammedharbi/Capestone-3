@@ -26,7 +26,7 @@ public class RequestInspectionService {
     private final UserRepository userRepository;
     private final EngineerRepository engineerRepository;
 
-    public List<RequestInspection> getRequestInspection() {
+    public List<RequestInspection> getRequestInspection(Integer adminId) {
         return requestInspectionRepository.findAll();
     }
 
