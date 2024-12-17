@@ -21,29 +21,28 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 public class ReportDTOIN {
 
-    @AssertTrue
+
     private Boolean structuralElements;
 
-    @AssertTrue
     private Boolean fireDetection;
 
-    @AssertTrue
+
     @Column(columnDefinition = "boolean not null")
     private Boolean  electricalDange;
 
-    @AssertTrue
+
     private Boolean  heatingCookingSystems;
 
-    @AssertTrue
+
     private Boolean  emergencyPreparedness;
 
-    @AssertTrue
+
     private Boolean  hazardousMaterialsStorage;
 
-    @AssertTrue
+
     private Boolean  ventilationSmokeManagement;
 
-    @AssertTrue
+
     private Boolean  exteriorSurroundings;
 
     private String notes;

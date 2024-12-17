@@ -67,7 +67,6 @@ public class Report {
     @Column(columnDefinition = "varchar(200)")
     private String requiredItems;
 
-
     @Column(columnDefinition = "timestamp not null default current_timestamp")
     private LocalDate ReportedDate;
 
