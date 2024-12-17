@@ -57,11 +57,13 @@ public class House {
 
     @ManyToOne
     @JsonIgnore
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-//    @OneToMany(cascade = CascadeType.ALL , mappedBy = "house")
-//    private Set<RequestInspection> requestInspections;
+    @OneToMany(cascade = CascadeType.ALL , mappedBy = "house")
+    private Set<RequestInspection> requestInspections;
 
-    // report relation (one house have many reports)
+    @OneToMany(cascade = CascadeType.ALL,mappedBy ="house" )
+    private Set<Report> reports;
 
 }

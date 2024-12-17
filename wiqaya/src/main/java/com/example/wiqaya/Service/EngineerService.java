@@ -14,9 +14,17 @@ public class EngineerService {
 
     private final EngineerRepository engineerRepository;
 
-    public List<Engineer> findAllEngineers() {
-        return engineerRepository.findAll();
+
+    public List<EngineerDTOOUT> getAllEngineers() {
+        List<Engineer> engineers = engineerRepository.findAll();
+        List<EngineerDTOOUT> engineerDTOOUTS = new ArrayList<>();
+        for (Engineer engineer : engineers) {
+            EngineerDTOOUT engineerDTOOUT = new EngineerDTOOUT(engineer.getFullName(), engineer.getPhoneNumber(), engineer.getStatus(), engineer.getAvailability());
+            engineerDTOOUTS.add(engineerDTOOUT);
+        }
+        return engineerDTOOUTS;
     }
+
 
     public void addEngineer(Engineer engineer) {
         engineerRepository.save(engineer);

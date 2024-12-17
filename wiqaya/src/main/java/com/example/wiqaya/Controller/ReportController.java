@@ -10,19 +10,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/report")
+@RequestMapping("/api/v1/wiqaya/report")
 @RequiredArgsConstructor
 public class ReportController {
-private final ReportService reportService;
+    private final ReportService reportService;
 
     @GetMapping("/get-all")
     public ResponseEntity getAll(){
         return ResponseEntity.status(200).body( reportService.getAll());
     }
 
-    @PostMapping("/add/engineerId/{engineerId}")
-    public ResponseEntity add( @PathVariable Integer engineerId,@RequestBody @Valid ReportDTOIN reportDTOIN){
-        reportService.add(engineerId,reportDTOIN);
+    @PostMapping("/add/engineerid/{engineerId}/requestinspectionid/{RequestInspectionId}")
+    public ResponseEntity add( @PathVariable Integer engineerId,@PathVariable Integer RequestInspectionId,@RequestBody @Valid ReportDTOIN reportDTOIN){
+        reportService.add(engineerId,RequestInspectionId,reportDTOIN);
         return ResponseEntity.status(200).body(new ApiResponse("report created successfully"));
     }
 }

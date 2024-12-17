@@ -26,8 +26,6 @@ public class ReportDTOIN {
 
     private Boolean fireDetection;
 
-
-    @Column(columnDefinition = "boolean not null")
     private Boolean  electricalDange;
 
 

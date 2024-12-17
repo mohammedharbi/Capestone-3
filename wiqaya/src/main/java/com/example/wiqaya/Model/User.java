@@ -47,9 +47,11 @@ public class User {
     // relation:
 
     // one User can have Many House "Set of houses"
-//    @OneToMany(cascade = CascadeType.ALL , mappedBy = "user")
-//    private Set<House> houses;
+    @OneToMany(cascade = CascadeType.ALL , mappedBy = "user")
+    private Set<House> houses;
 
     // one User can have many Review "Set of reviews"
+//    @OneToMany(cascade = CascadeType.ALL , mappedBy = "user")
+//    private Set<Review> reviews;
 
 }

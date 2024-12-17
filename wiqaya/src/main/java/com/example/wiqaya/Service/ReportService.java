@@ -5,9 +5,12 @@ import com.example.wiqaya.ApiResponse.ApiException;
 import com.example.wiqaya.DTO.IN.ReportDTOIN;
 import com.example.wiqaya.DTO.OUT.ReportDTOOUT;
 import com.example.wiqaya.Model.Engineer;
+import com.example.wiqaya.Model.House;
 import com.example.wiqaya.Model.Report;
+import com.example.wiqaya.Model.RequestInspection;
 import com.example.wiqaya.Repository.EngineerRepository;
 import com.example.wiqaya.Repository.ReportRepository;
+import com.example.wiqaya.Repository.RequestInspectionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +23,7 @@ import java.util.List;
 public class ReportService {
     private  final ReportRepository reportRepository;
     private final EngineerRepository engineerRepository;
+    private final RequestInspectionRepository requestInspectionRepository;
 
     public List<ReportDTOOUT> getAll(){
         List<Report>reports=reportRepository.findAll();
@@ -28,21 +32,41 @@ public class ReportService {
         List<ReportDTOOUT> dtos=new ArrayList<>();
         for(Report r:reports){
             ReportDTOOUT reportDTOOUT =new ReportDTOOUT(r.getId(),r.getEngineer().getId(),r.getStructuralElements(),r.getFireDetection(),r.getHeatingCookingSystems(),r.getEmergencyPreparedness(),r.getVentilationSmokeManagement()
-            ,r.getExteriorSurroundings(),r.getPercentage(),r.getNotes(),r.getRequiredItems(),r.getReportedDate());
+                    ,r.getExteriorSurroundings(),r.getPercentage(),r.getNotes(),r.getRequiredItems(),r.getReportedDate());
             dtos.add(reportDTOOUT);
         }
         return  dtos;
     }
 
 
-    public void add(Integer engineerId ,ReportDTOIN reportDTOIN){
+    public void add(Integer engineerId ,Integer  RequestInspectionId ,ReportDTOIN reportDTOIN){
+
+        //check Eng
         Engineer engineer=engineerRepository.findEngineerById(engineerId);
         if(engineer==null)throw new ApiException("there is no engineer found");
 
+        // check if the request exist && check if the engineer own this request
+   RequestInspection requestInspection=requestInspectionRepository.findRequestInspectionById(RequestInspectionId);
+   if(requestInspection==null)throw new ApiException("there is no RequestInspectionId by this id");
 
-        //****** check if the
+   if(!requestInspection.getEngineer().getId().equals(engineerId))throw new ApiException("the engineer didn't assign to this request inspection ");
 
-        int percentage =1;
+
+        int trueCount = 0;
+
+        if (reportDTOIN.getStructuralElements()) trueCount++;
+        if (reportDTOIN.getFireDetection()) trueCount++;
+        if (reportDTOIN.getElectricalDange()) trueCount++;
+        if (reportDTOIN.getHeatingCookingSystems()) trueCount++;
+        if (reportDTOIN.getEmergencyPreparedness()) trueCount++;
+        if (reportDTOIN.getHazardousMaterialsStorage()) trueCount++;
+        if (reportDTOIN.getVentilationSmokeManagement()) trueCount++;
+        if (reportDTOIN.getExteriorSurroundings()) trueCount++;
+
+        // Calculate percentage (based on the 8 boolean values)
+        int percentage = (trueCount * 100) / 8;
+        House house=requestInspection.getHouse();
+
         Report report = new Report(
                 null, // ID
                 reportDTOIN.getStructuralElements(),
@@ -57,12 +81,12 @@ public class ReportService {
                 reportDTOIN.getNotes(),
                 reportDTOIN.getRequiredItems(),
                 LocalDate.now() // Set the ReportedDate as the current date
-               ,engineer
+                ,engineer,house,requestInspection
         );
 
         // Save the report to the database
         reportRepository.save(report);
-}
+    }
 
 //    // Method to assign an engineer to a report
 //    public Report assignEngineerToReport(Integer reportId, Integer engineerId) {

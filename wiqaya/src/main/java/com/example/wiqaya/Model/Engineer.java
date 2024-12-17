@@ -48,14 +48,14 @@ public class Engineer {
     private String accreditationNumber; // for example SCE-2024567890
 
     @Pattern(regexp = "^(Active|Inactive)$", message = "Engineer status must be either 'Active' or 'Inactive'")
-    @Column(columnDefinition = "varchar(8) not null")
-    private String status = "Inactive"; // it will be Inactive by default therefore no need for @NotEmpty. the admin  will check the Engineer accreditation number then decide to active it or not
+    @Column(columnDefinition = "varchar(8)")
+    private String status ; // it will be Inactive by default therefore no need for @NotEmpty. the admin  will check the Engineer accreditation number then decide to active it or not
 
-    @Column(columnDefinition = "varchar(11) not null")
-    private Boolean availability = true;
+    @Column(columnDefinition = "varchar(11) ")
+    private Boolean availability = false;
 
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "engineer")
-//    private Set<RequestInspection> requestInspections;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "engineer")
+    private Set<RequestInspection> requestInspections;
 
 
     @OneToMany(cascade = CascadeType.ALL,mappedBy ="engineer" )

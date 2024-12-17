@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/request-inspection")
+@RequestMapping("/api/v1/wiqaya/request-inspection")
 @RequiredArgsConstructor
 public class RequestInspectionController {
 

@@ -10,6 +10,7 @@ import jakarta.validation.constraints.PositiveOrZero;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 @Data
 @Setter
@@ -74,6 +75,21 @@ public class Report {
     @JoinColumn(name="engineer_id",referencedColumnName = "id")
     @JsonIgnore
     private Engineer engineer;
+
+    @ManyToOne
+    @JoinColumn(name="house_id",referencedColumnName = "id")
+    @JsonIgnore
+    private House house;
+
+
+//    @OneToMany(cascade = CascadeType.ALL , mappedBy = "report")
+//    private Set<Offer> requestInspections;
+
+
+    @OneToOne
+    @MapsId
+    @JsonIgnore
+    private RequestInspection requestInspection;
 
 
 

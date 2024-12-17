@@ -32,6 +32,16 @@ public class RequestInspectionService {
 //        }else throw new ApiException("requestInspection not found");
 //    }
 
+    public void updateRequestInspection(Integer id, RequestInspection requestInspection) {
+        RequestInspection requestInspection1 = requestInspectionRepository.findRequestInspectionById(id);
+
+        if (requestInspection1 != null) {
+            requestInspection1.setStatus(requestInspection.getStatus());
+            requestInspection1.setDate(requestInspection.getDate());
+            requestInspectionRepository.save(requestInspection1);
+        }else throw new ApiException("requestInspection not found");
+    }
+
     public void deleteRequestInspection(Integer id) {
         RequestInspection requestInspection = requestInspectionRepository.findRequestInspectionById(id);
         if (requestInspection != null) {
