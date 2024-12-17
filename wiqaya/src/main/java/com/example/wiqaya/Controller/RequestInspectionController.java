@@ -18,9 +18,9 @@ public class RequestInspectionController {
 
     private final RequestInspectionService requestInspectionService;
 
-    @GetMapping("/get")
-    public ResponseEntity getRequestInspections() {
-        return ResponseEntity.status(200).body(requestInspectionService.getRequestInspection());
+    @GetMapping("/get/admin-id/{id}")
+    public ResponseEntity getRequestInspections(@PathVariable Integer id) {
+        return ResponseEntity.status(200).body(requestInspectionService.getRequestInspection(id));
     }
 
     @PostMapping("/add/user_id/{user_id}/house_id/{house_id}")

@@ -47,7 +47,7 @@ public class Engineer {
     @Column(columnDefinition = "varchar(14) not null unique")
     private String accreditationNumber; // for example SCE-2024567890
 
-    @Pattern(regexp = "^(Active|Inactive)$", message = "Engineer status must be either 'Active' or 'Inactive'")
+    @Pattern(regexp = "^(UnderReview|Approved|Rejected)$", message = "Engineer status must be either 'Active' or 'Inactive'")
     @Column(columnDefinition = "varchar(8)")
     private String status ; // it will be Inactive by default therefore no need for @NotEmpty. the admin  will check the Engineer accreditation number then decide to active it or not
 
