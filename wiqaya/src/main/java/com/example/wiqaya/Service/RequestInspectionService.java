@@ -15,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -185,6 +187,38 @@ public class RequestInspectionService {
         engineerRepository.save(engineer);
         houseRepository.save(house);
 
+
+    }
+
+
+    //hadeel
+    public void CancelRequestInspection(Integer userid, Integer requestid){
+    //check request id if found
+       RequestInspection requestInspection = requestInspectionRepository.findRequestInspectionById(requestid);
+       if(requestInspection==null) throw new ApiException("request not found");
+
+        //check if the user own this request
+        if (!requestInspection.getHouse().getUser().getId().equals(userid)) {
+            throw new ApiException("User is not authorized to cancel this request");
+        }
+
+        if(requestInspection.getStatus().equalsIgnoreCase("cancelled"))
+            throw new ApiException("Request already cancelled");
+
+        if(requestInspection.getStatus().equalsIgnoreCase("Reported"))
+            throw new ApiException("Request already Reported");
+
+//احسب الفرق بين تاريخ اليوم وتاريخ الطلب
+
+        Period period = Period.between(LocalDate.now(),requestInspection.getDate());
+
+// اذا كان اقل من يوم ثرو اكسبشن
+        if (period.getDays() < 1) {
+            throw new ApiException(period.getDays()+"  Request can only be cancelled 1 day before the inspection date");
+        }
+
+       requestInspection.setStatus("cancelled");
+        requestInspectionRepository.save(requestInspection);
 
     }
 }

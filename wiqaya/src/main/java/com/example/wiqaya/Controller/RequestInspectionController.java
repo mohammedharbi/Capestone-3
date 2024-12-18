@@ -52,5 +52,11 @@ public class RequestInspectionController {
         return ResponseEntity.status(200).body(new ApiResponse("request inspection assigned to an engineer"));
     }
 
+    @PutMapping("/cancel-request/userid/{userid}/requestid/{requestid}")
+    public ResponseEntity CancelRequestInspection(@PathVariable Integer userid,@PathVariable Integer requestid){
+      requestInspectionService.CancelRequestInspection(userid,requestid);
+      return ResponseEntity.status(200).body(new ApiResponse("Request Inspection Cancelled"));
+    }
+
 
 }

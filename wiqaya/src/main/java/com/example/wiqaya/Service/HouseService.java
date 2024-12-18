@@ -92,7 +92,7 @@ public class HouseService {
     }
 
 
-    // get all houses
+    // hadeel
     public List<HouseDTOOUT2> getMyHouses(Integer userid){
         User user=userRepository.findUserById(userid);
         if(user==null)throw new ApiException("user not found");
