@@ -97,6 +97,8 @@ public class OfferService {
             OfferDTOOUT offerDTOOUT =new OfferDTOOUT(o.getId(),o.getDescription(),o.getStatus(),o.getPrice(),o.getServiceProvider().getId());
             dtos.add(offerDTOOUT);
         }
+
+
         return  dtos;
 
     }
