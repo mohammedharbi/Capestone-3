@@ -120,6 +120,24 @@ public class HouseService {
 
     // Endpoint No.29
     //mohammed
-    //get avg condation by city (city)
+    //get avg Condition by city (city)
+    public Double getAllHouseAverageConditionPercentageByCity(Integer adminId,Integer conditionPercentage,String city){
+        User admin = userRepository.findUserById(adminId);
+        if(admin==null){throw new ApiException("User not found");}
+        if (!admin.getRole().equalsIgnoreCase("admin")) {
+            throw new ApiException("Not Authorized: Only admin can perform this action");
+        }
+
+        Double avg=0.0;
+        Integer count=0;
+
+        for (House h: houseRepository.findAll()){
+            if(h.getCity().equals(city)){
+                avg += h.getConditionPercentage();
+                count++;
+            }
+        }
+        return avg/count;
+    }
 
  }
