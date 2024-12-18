@@ -52,6 +52,9 @@ public class ReportService {
 
    if(!requestInspection.getEngineer().getId().equals(engineerId))throw new ApiException("the engineer didn't assign to this request inspection ");
 
+   if (requestInspection.getStatus().equalsIgnoreCase("cancelled")){
+       throw new ApiException("This request is cancelled you can't reported");
+   }
 
    Boolean isPublished=false;
 

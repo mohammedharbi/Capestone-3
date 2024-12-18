@@ -17,4 +17,8 @@ public interface HouseRepository extends JpaRepository<House,Integer> {
 
     List<House> findHouseByConditionPercentageLessThan(Integer percentage);
 
+    // to get form the DB houses have that type and city
+    List<House> findHousesByCityAndType(String city, String type);
+
+    List<House> findHousesByStatus( String status);
 }

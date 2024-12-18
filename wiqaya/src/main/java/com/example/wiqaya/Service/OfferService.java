@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -139,9 +140,31 @@ public class OfferService {
 
     }
 
+
     // Endpoint No.24
     //sara
-    //user get the most famous serviceProvider by offerRecived
+    //user get the most famous serviceProvider by offerReserved
+    // user filter serviceProviders who send offer to him to get the most famous Provider based rating
+    // take userId , Number of top serProvider he went like top 3 or top 5 ..
+    public List<Offer> getTopRatedOffersForUser(Integer userId, int topN) {
+        User user = userRepository.findUserById(userId);
+        if (user == null) {
+            throw new ApiException("User not found");
+        }
+        List<Offer> filteredOffers = offerRepository.findOffersByUserId(userId);
+        if (filteredOffers == null || filteredOffers.isEmpty()) {
+            throw new ApiException("No offers found");
+        }
+        // Sort the offers based on the rating of the service provider in descending order
+        List<Offer> sortedOffers = filteredOffers.stream()
+                .sorted((offer1, offer2) -> Double.compare(
+                        offer2.getServiceProvider().getAverageRating(),
+                        offer1.getServiceProvider().getAverageRating()
+                ))
+                .collect(Collectors.toList());
+        // Return only the top N offers
+        return sortedOffers.stream().limit(topN).collect(Collectors.toList());
+    }
 
     // Endpoint No.25
     //mohammed

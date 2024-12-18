@@ -18,6 +18,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -70,10 +71,16 @@ public class RequestInspectionService {
         if (!house.getUser().getId().equals(user_id)) {
             throw new ApiException("user doesn't own the house");
         }
+        RequestInspection existingRequest = requestInspectionRepository.findActiveRequestForHouse(house_id);
+        if (existingRequest != null) {
+            throw new ApiException("there is a processing request in this house");
+        }
+
         if (getAvailableEngineersForDate(requestInspectionDTOIN.getDate()) == null) {throw new ApiException("there is no available engineers on this date please enter a new date");}
         RequestInspection requestInspection = new RequestInspection(null, requestInspectionDTOIN.getDate(), "Pending", null, house, null);
         requestInspectionRepository.save(requestInspection);
     }
+
 
     public void updateRequestInspection(Integer id, RequestInspection requestInspection) {
         RequestInspection requestInspection1 = requestInspectionRepository.findRequestInspectionById(id);

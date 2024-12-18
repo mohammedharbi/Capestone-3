@@ -60,6 +60,7 @@ public class House {
     private Set<RequestInspection> requestInspections;
 
     @OneToMany(cascade = CascadeType.ALL,mappedBy ="house" )
+    @JsonIgnore
     private Set<Report> reports;
 
 }
