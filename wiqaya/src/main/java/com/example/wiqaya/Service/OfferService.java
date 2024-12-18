@@ -101,6 +101,7 @@ public class OfferService {
         //check user
         User user=userRepository.findUserById(userid);
         if(user==null)throw new ApiException("user not found");
+        if(!user.getRole().equalsIgnoreCase("user")) throw new ApiException("admin can not accept user offer");
         //check offer if exist
         Offer offer=offerRepository.findOfferById(offerid);
         if(user==null)throw new ApiException("offer not found");
@@ -108,7 +109,22 @@ public class OfferService {
         //check if the user own this report
         Report report =reportRepository.findReportById(offer.getReport().getId());
         House house=houseRepository.findHouseById(report.getHouse().getId());
-//        if()
+       if(!house.getUser().getId().equals(userid))
+           throw new ApiException("the user doesn't own this report");
+
+       if(offer.getStatus().equalsIgnoreCase("Accepted")|| (offer.getStatus().equalsIgnoreCase("Rejected"))) throw new ApiException("you already accept one of the offer");
+
+
+        offer.setStatus("Accepted");
+       offerRepository.save(offer);
+
+        List<Offer>offers=offerRepository.findOffersByReport(report);
+        for(Offer o:offers){
+            if(o.getId()!=offer.getId()){
+                o.setStatus("Rejected");
+                offerRepository.save(o);
+            }
+        }
 
 
     }
