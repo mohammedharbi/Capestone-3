@@ -4,8 +4,10 @@ import com.example.wiqaya.ApiResponse.ApiException;
 import com.example.wiqaya.DTO.IN.UserDTOIN;
 import com.example.wiqaya.DTO.OUT.UserDTOOUT;
 import com.example.wiqaya.Model.Engineer;
+import com.example.wiqaya.Model.ServiceProvider;
 import com.example.wiqaya.Model.User;
 import com.example.wiqaya.Repository.EngineerRepository;
+import com.example.wiqaya.Repository.ServiceProviderRepository;
 import com.example.wiqaya.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final EngineerRepository engineerRepository;
+    private final ServiceProviderRepository serviceProviderRepository;
 
     // get all users
     public List<UserDTOOUT> getAllUsers(){
@@ -58,6 +61,7 @@ public class UserService {
       if(user==null){
           throw new ApiException("User not found!");
       }
+      user.getHouses().clear();
       userRepository.delete(user); // delete the user
     }
 
@@ -65,28 +69,64 @@ public class UserService {
 
     // // Endpoint No.1
     // admin check Eng isVerified
-    public void verifiedEng(Integer userId,Integer engId,String status){
-     User user = userRepository.findUserById(userId);
-     if(user==null){
-        throw new ApiException("User not found");
-     }
-     if(user.getRole().equals("user")){
-         throw new ApiException("Not Authorized user");
+    public void verifiedEng(Integer userId, Integer engId, String status, String rejectionReason) {
+        // Verify if the user exists
+        User user = userRepository.findUserById(userId);
+        if (user == null) {
+            throw new ApiException("User not found");
+        }
+        // Check if the user has admin privileges
+        if (!user.getRole().equalsIgnoreCase("admin")) {
+            throw new ApiException("Not Authorized: Only admin can perform this action");
         }
         Engineer engineer = engineerRepository.findEngineerById(engId);
-     if(engineer==null){
-         throw new ApiException("Engineer not found");
-     }
-        if (!status.equalsIgnoreCase("Approved") && !status.equalsIgnoreCase("Rejected")) {
-            throw new ApiException("Invalid status. Status must be 'Approved' or 'Rejected'.");
+        if (engineer == null) {
+            throw new ApiException("Engineer not found");
         }
+        if (!status.equalsIgnoreCase("Approved") && !status.equalsIgnoreCase("Rejected")) {
+            throw new ApiException("Invalid status");
+        }
+        // Update engineer's status
         engineer.setStatus(status);
-     if(status.equalsIgnoreCase("Approved")){
-         engineer.setAvailability(true);
-     }
-     engineerRepository.save(engineer);
+
+        if (status.equalsIgnoreCase("Approved")) {
+            engineer.setAvailability(true); // Set the engineer as available if approved
+        } else if (status.equalsIgnoreCase("Rejected")) {
+            engineer.setAvailability(false); // Set the engineer as unavailable if rejected
+
+            if (rejectionReason == null || rejectionReason.trim().isEmpty()) {
+                throw new ApiException("Rejection reason must be provided when rejecting an engineer");
+            }
+            engineer.setRejectionReason(rejectionReason);
+        }
+        engineerRepository.save(engineer);
     }
 
-    // Endpoint No.2
-    // assign eng to a requestInspection
+
+
+    // Endpoint No.4
+    // Admin will check the license of the ServiceProvider and decide the status
+    public void verifiedProvider(Integer userId, Integer providerId, String status) {
+        User user = userRepository.findUserById(userId);
+        if (user == null) {
+            throw new ApiException("User not found");
+        }
+        if (!user.getRole().equalsIgnoreCase("admin")) {
+            throw new ApiException("Not Authorized: Only admin can perform this action");
+        }
+
+        ServiceProvider serviceProvider = serviceProviderRepository.findServiceProviderById(providerId);
+        if (serviceProvider == null) {
+            throw new ApiException("ServiceProvider not found");
+        }
+
+        if (!status.equalsIgnoreCase("Active") && !status.equalsIgnoreCase("Inactive"))
+        {throw new ApiException("Invalid status");}
+
+        serviceProvider.setStatus(status);
+        serviceProviderRepository.save(serviceProvider);
+    }
+
+
+
 }

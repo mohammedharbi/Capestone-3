@@ -45,9 +45,20 @@ public class UserController {
     }
 
     // --------------------------------------------------
-    @PutMapping("verified-eng/userId/{userId}/engId/{engId}/status/{status}")
-    public ResponseEntity verifiedEng(@PathVariable Integer userId, @PathVariable Integer engId, @PathVariable String status){
-        userService.verifiedEng(userId,engId,status);
-        return ResponseEntity.status(200).body(new ApiResponse("engineer verified"));
+
+    // // Endpoint No.1
+    // admin check Eng isVerified
+    @PutMapping("/verified/eng/user-id/{user_id}/eng-id/{eng_id}/status/{status}")
+    public ResponseEntity<?> verifiedEng(@PathVariable Integer user_id,@PathVariable Integer eng_id,@PathVariable String status, @RequestParam String rejectionReason){
+        userService.verifiedEng(user_id,eng_id,status,rejectionReason);
+        return ResponseEntity.status(200).body(new ApiResponse("Check Engineer done"));
     }
+
+    // Endpoint No.5
+    @PutMapping("/verified/provider/user-id/{user_id}/provider-id/{provider_id}/status/{status}")
+    public ResponseEntity<?> verifiedProvider(@PathVariable Integer user_id,@PathVariable Integer provider_id,@PathVariable String status){
+        userService. verifiedProvider(user_id,provider_id,status);
+        return ResponseEntity.status(200).body(new ApiResponse("Provider is active now!"));
+    }
+
 }

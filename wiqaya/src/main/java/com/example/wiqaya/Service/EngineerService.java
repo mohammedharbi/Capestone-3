@@ -29,6 +29,7 @@ public class EngineerService {
 
 
     public void addEngineer(Engineer engineer) {
+        engineer.setStatus("UnderReview");
         engineerRepository.save(engineer);
     }
 
@@ -51,4 +52,30 @@ public class EngineerService {
         }else throw new ApiException("Engineer Not Found");
     }
 
+    // --------------------------------------------------------
+
+    // Endpoint No.5
+    // Eng check on his status if he get approved or rejected
+    public String checkMyStatus(Integer id) {
+        Engineer engineer = engineerRepository.findEngineerById(id);
+        if(engineer==null) {
+           throw new ApiException("Engineer not found");
+        }
+        // Get the status and rejection reason
+        String status = engineer.getStatus();
+        String rejectionReason = engineer.getRejectionReason();
+
+        // Check the status and return the appropriate response
+        if ("approved".equalsIgnoreCase(status)) {
+            return  status + " Congrats !" ;
+        } else if ("rejected".equalsIgnoreCase(status)) {
+            return "Rejected: " + rejectionReason;
+        } else {
+            return "Status: " + status;
+        }
+    }
+
+
+    // Endpoint No.6
+    // Eng get all the request Inspection that assign to him
 }

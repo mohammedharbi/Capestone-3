@@ -4,14 +4,18 @@ import com.example.wiqaya.ApiResponse.ApiException;
 import com.example.wiqaya.ApiResponse.ApiResponse;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.converter.HttpMessageNotWritableException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.ConcurrentModificationException;
 
 
 @org.springframework.web.bind.annotation.ControllerAdvice
@@ -51,6 +55,11 @@ public class ControllerAdvice {
         return ResponseEntity.status(400).body(new ApiResponse(msg));
     }
 
+    @ExceptionHandler(value = NoResourceFoundException.class)
+    public ResponseEntity<?>NoResourceFoundException(NoResourceFoundException e){
+        String msg = e.getMessage();
+        return ResponseEntity.status(400).body(msg);
+    }
 
     // Json parse Exception
     @ExceptionHandler(value = HttpMessageNotReadableException.class)
@@ -73,6 +82,30 @@ public class ControllerAdvice {
 
     @ExceptionHandler(value = HttpMessageNotWritableException.class)
     public ResponseEntity HttpMessageNotWritableException(HttpMessageNotWritableException e) {
+        String msg = e.getMessage();
+        return ResponseEntity.status(400).body(msg);
+    }
+
+    @ExceptionHandler(value = MissingServletRequestParameterException.class)
+    public ResponseEntity<?> MissingServletRequestParameterException(MissingServletRequestParameterException e){
+        String msg = e.getMessage();
+        return ResponseEntity.status(400).body(msg);
+    }
+
+    @ExceptionHandler(value = IndexOutOfBoundsException.class)
+    public ResponseEntity<?> IndexOutOfBoundsException(IndexOutOfBoundsException e){
+        String msg = e.getMessage();
+        return ResponseEntity.status(400).body(msg);
+    }
+
+    @ExceptionHandler(value = IncorrectResultSizeDataAccessException.class)
+    public ResponseEntity<?> IncorrectResultSizeDataAccessException(IncorrectResultSizeDataAccessException e){
+        String msg = e.getMessage();
+        return ResponseEntity.status(400).body(msg);
+    }
+
+    @ExceptionHandler(value = ConcurrentModificationException.class)
+    public ResponseEntity<?> ConcurrentModificationException(ConcurrentModificationException e){
         String msg = e.getMessage();
         return ResponseEntity.status(400).body(msg);
     }

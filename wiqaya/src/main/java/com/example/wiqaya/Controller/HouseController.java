@@ -27,15 +27,15 @@ public class HouseController {
         return ResponseEntity.status(200).body(new ApiResponse("House added"));
     }
 
-    @GetMapping("/update/house-id/{id}")
+    @PutMapping("/update/house-id/{id}")
     public ResponseEntity<?> updateHouse(@PathVariable Integer id,@RequestBody @Valid House house){
         houseService.updateHouse(id,house);
         return ResponseEntity.status(200).body(new ApiResponse("House updated"));
     }
 
-    @GetMapping("/delete/house-id/{id}")
-    public ResponseEntity<?> deleteHouse(@PathVariable Integer id){
-        houseService.deleteHouse(id);
+    @DeleteMapping("/delete/user-id/{userId}/house-id/{houseId}")
+    public ResponseEntity<?> deleteHouse(@PathVariable Integer userId,@PathVariable Integer houseId){
+        houseService.deleteHouse(userId,houseId);
         return ResponseEntity.status(200).body(new ApiResponse("House deleted"));
     }
 

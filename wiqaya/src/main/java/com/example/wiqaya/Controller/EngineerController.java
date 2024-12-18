@@ -37,4 +37,14 @@ public class EngineerController {
         engineerService.deleteEngineer(id);
         return ResponseEntity.status(200).body(new ApiResponse("Engineer deleted"));
     }
+
+    //----------------------------------------
+
+    // Endpoint No.5
+    // Eng check on his status if he get approved or rejected
+    @GetMapping("/check-eng-status/eng-id/{id}")
+    public ResponseEntity<?> checkMyStatus(@PathVariable Integer id){
+      return ResponseEntity.status(200).body(engineerService.checkMyStatus(id));
+    }
+
 }

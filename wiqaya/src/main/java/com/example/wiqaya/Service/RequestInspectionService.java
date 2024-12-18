@@ -57,7 +57,6 @@ public class RequestInspectionService {
     public void addRequestInspection(Integer user_id, Integer house_id, RequestInspectionDTOIN requestInspectionDTOIN) {
         House house = houseRepository.findHouseById(house_id);
         User user = userRepository.findUserById(user_id);
-
         if (house == null) {
             throw new ApiException("house not found");
         }
@@ -98,12 +97,13 @@ public class RequestInspectionService {
         } else throw new ApiException("requestInspection not found");
     }
 
-    public List<Engineer> isEngineerAvailable(LocalDate date) {
-        List<RequestInspection> requestInspections = requestInspectionRepository.findAll();
-        List<Engineer> engineers = engineerRepository.findAll();
-        if (engineers == null|| engineers.isEmpty()) {
-            throw new ApiException("engineers not found");
-        }
+
+//    public List<Engineer> isEngineerAvailable(LocalDate date) {
+//        List<RequestInspection> requestInspections = requestInspectionRepository.findAll();
+//        List<Engineer> engineers = engineerRepository.findAll();
+//        if (engineers == null|| engineers.isEmpty()) {
+//            throw new ApiException("engineers not found");
+//        }
 
         //flow 1
 //        List<Engineer> availableEngineers = new ArrayList<>();
@@ -114,26 +114,46 @@ public class RequestInspectionService {
 //            }
 //        }
         //flow 2
-//        List<Engineer> availableEngineers = requestInspectionRepository.findAvailableEngineersForDate(date);
+
+        // Endpoint No.2
+    // admin can check the availability on specifies day (Integer day) not working
+        public List<Engineer> getAvailableEngineersForDate(LocalDate date) {
+            if (date == null) {
+                throw new IllegalArgumentException("Date cannot be null");
+            }
+
+            // Fetch available engineers using the custom repository query
+            List<Engineer> availableEngineers = engineerRepository.findAvailableEngineersForDate(date);
+
+            if (availableEngineers.isEmpty()) {
+                throw new ApiException("No available engineers found for the selected date");
+            }
+
+            return availableEngineers;
+        }
+
 
         //flow 3
-        List<Engineer> availableEngineers = new ArrayList<>();
-        for (Engineer engineer : engineers) {
-            Integer countEngineer = 0;
-            for (RequestInspection requestInspection : requestInspections) {
-                if (requestInspection.getDate().equals(date)) {
-                    if (requestInspection.getEngineer().getId().equals(engineer.getId())) {
-                         countEngineer ++;
-                    }
-                }
-            }
-            if (countEngineer < 5){
-                availableEngineers.add(engineer);
-            }
-        }
-        return availableEngineers;
-    }
+//        List<Engineer> availableEngineers = new ArrayList<>();
+//        for (Engineer engineer : engineers) {
+//            Integer countEngineer = 0;
+//            for (RequestInspection requestInspection : requestInspections) {
+//                if (requestInspection.getDate().equals(date)) {
+//                    if (requestInspection.getEngineer().getId().equals(engineer.getId())) {
+//                         countEngineer ++;
+//                    }
+//                }
+//            }
+//            if (countEngineer < 5){
+//                availableEngineers.add(engineer);
+//            }
+//        }
+//        return availableEngineers;
+//    }
 
+
+    // Endpoint No.3
+    // assign eng to a requestInspection
     public void assignEng(Integer adminId, Integer engId, Integer requestInspectionId){
         User admin = userRepository.findUserById(adminId);
         if (admin == null) {throw new ApiException("user not found");}
@@ -160,7 +180,6 @@ public class RequestInspectionService {
 
 //        // Update engineer's list of inspections
 //        engineer.getRequestInspections().add(requestInspection);
-
 
         requestInspectionRepository.save(requestInspection);
         engineerRepository.save(engineer);

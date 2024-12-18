@@ -34,10 +34,15 @@ public class HouseService {
 
     // add new House for a user
     public void addHouse(Integer user_id,HouseDTOIN houseDTOIN){
-       User user = userRepository.findUserById(user_id);
+       User user = userRepository.findUserById(user_id);  // Find the user
        if(user==null){
            throw new ApiException("User not found");
        }
+        // Check if the user already has a house with the same city, location, and type
+        House existingHouse = houseRepository.findHouseByUserAndCityAndLocationAndType(user, houseDTOIN.getCity(), houseDTOIN.getLocation(), houseDTOIN.getType());
+        if (existingHouse != null) {
+            throw new ApiException("You already have a house with the same details");
+        }
        House house = new House(null,houseDTOIN.getCity(),houseDTOIN.getLocation(),0 // i put it 0 cuz it give me an error (Column 'condition_percentage' cannot be null)
                ,houseDTOIN.getType(),"un_checked",user,null,null);
       houseRepository.save(house);
@@ -56,12 +61,18 @@ public class HouseService {
     }
 
     // delete house
-    public void deleteHouse(Integer id){
-        House house = houseRepository.findHouseById(id);
+    public void deleteHouse(Integer userId,Integer houseId){
+        User user = userRepository.findUserById(userId);
+        if(user==null){
+            throw new ApiException("User not found");
+        }
+        House house = houseRepository.findHouseById(houseId);
         if(house==null){
             throw new ApiException("House not found");
         }
+        user.getHouses().remove(house);
         houseRepository.delete(house);
+        userRepository.save(user);
     }
 
  }

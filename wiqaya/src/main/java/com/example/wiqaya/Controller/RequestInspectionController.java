@@ -43,7 +43,7 @@ public class RequestInspectionController {
 
     @GetMapping("/get-available-engineer/date/{date}")
     public ResponseEntity getAvailableEngineerDate(@PathVariable LocalDate date) {
-        return ResponseEntity.status(200).body(requestInspectionService.isEngineerAvailable(date));
+        return ResponseEntity.status(200).body(requestInspectionService.getAvailableEngineersForDate(date));
     }
 
     @PutMapping("assign-eng/adminId/{adminId}/engId/{engId}/requestInspectionId/{requestInspectionId}")
