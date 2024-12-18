@@ -16,7 +16,6 @@ public class Offer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
     @NotEmpty(message = "description is empty")
     @Size(min = 5, max = 100, message = "description must be between 5 and 100 characters")
     @Column(columnDefinition = "varchar(100)")
@@ -35,7 +34,6 @@ public class Offer {
     @JsonIgnore
     @JoinColumn(name = "serviceprovider_id", referencedColumnName = "id")
     private ServiceProvider serviceProvider;
-
 
     // here  ,, many offers for one report
     @ManyToOne

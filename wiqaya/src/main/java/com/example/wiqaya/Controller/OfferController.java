@@ -38,4 +38,10 @@ public class OfferController {
         return ResponseEntity.status(200).body(new ApiResponse("Offer deleted"));
     }
 
+    //hadeel
+    @GetMapping("/get-offers/userid/{userid}/rportid/{reportid}")
+    public ResponseEntity getOffersByReport(@PathVariable Integer userid, @PathVariable Integer reportid){
+       return ResponseEntity.status(200).body(offerService.getOffersByReport(userid,reportid));
+    }
+
 }
