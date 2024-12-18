@@ -1,5 +1,6 @@
 package com.example.wiqaya.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
@@ -58,6 +59,7 @@ public class Engineer {
     private Boolean availability;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "engineer")
+    @JsonIgnore
     private Set<RequestInspection> requestInspections;
 
 

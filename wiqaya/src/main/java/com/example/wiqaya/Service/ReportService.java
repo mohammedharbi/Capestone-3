@@ -8,6 +8,7 @@ import com.example.wiqaya.Model.*;
 import com.example.wiqaya.Repository.EngineerRepository;
 import com.example.wiqaya.Repository.ReportRepository;
 import com.example.wiqaya.Repository.RequestInspectionRepository;
+import com.example.wiqaya.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,7 @@ public class ReportService {
     private  final ReportRepository reportRepository;
     private final EngineerRepository engineerRepository;
     private final RequestInspectionRepository requestInspectionRepository;
+    private final UserRepository userRepository;
 
     public List<ReportDTOOUT> getAll(){
         List<Report>reports=reportRepository.findAll();
@@ -71,7 +73,7 @@ public class ReportService {
         house.setConditionPercentage(percentage);
         // add set for status
        house.setStatus("checked");
-
+        requestInspection.setStatus("Reported");
         Report report = new Report(
                 null, // ID
                 reportDTOIN.getStructuralElements(),
@@ -125,4 +127,17 @@ public class ReportService {
 //
 //    }
 
+    public void publishReport(Integer userId, Integer reportId){
+        User user = userRepository.findUserById(userId);
+        if (user == null) throw new ApiException("user not found");
+
+        Report report = reportRepository.findReportById(reportId);
+        if(report==null){throw new ApiException("report not found");}
+
+        if(!report.getRequestInspection().getHouse().getUser().getId().equals(userId)){throw new ApiException("user can't publish report, because he doesn't own the house");}
+
+        report.setIsPublished(true);
+        reportRepository.save(report);
+
+    }
 }

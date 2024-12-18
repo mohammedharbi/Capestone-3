@@ -32,4 +32,10 @@ public class ReportController {
         reportService.delete(id);
         return ResponseEntity.status(200).body(new ApiResponse("report deleted"));
     }
+
+    @PutMapping("/publish-report/user/{user}/report/{report}")
+    public ResponseEntity publishReport(@PathVariable Integer user, @PathVariable Integer report){
+        reportService.publishReport(user, report);
+        return ResponseEntity.status(200).body(new ApiResponse("report published"));
+    }
 }
