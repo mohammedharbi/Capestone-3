@@ -21,5 +21,5 @@ public class OfferDTOOUT {
 
     private Double price;
 
-    private ServiceProvider serviceprovider_id;
+    private Integer serviceprovider_id;
 }

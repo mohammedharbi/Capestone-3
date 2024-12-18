@@ -3,6 +3,7 @@ package com.example.wiqaya.Controller;
 
 import com.example.wiqaya.ApiResponse.ApiResponse;
 import com.example.wiqaya.DTO.IN.HouseDTOIN;
+import com.example.wiqaya.DTO.IN.OfferDTOIN;
 import com.example.wiqaya.DTO.IN.ServiceProviderDTOIN;
 import com.example.wiqaya.Model.ServiceProvider;
 import com.example.wiqaya.Service.ServiceProviderService;
@@ -33,4 +34,6 @@ public class ServiceProviderController {
         serviceProviderService.update(id,serviceProvider);
         return  ResponseEntity.status(200).body(new ApiResponse("service provider updated"));
     }
+
+
 }
