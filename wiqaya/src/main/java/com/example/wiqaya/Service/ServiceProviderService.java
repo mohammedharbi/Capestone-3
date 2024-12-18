@@ -61,6 +61,15 @@ private final UserRepository userRepository;
         return serviceProviderDTOOUTS;
     }
 
+    // Endpoint No.
+    // user can display service provider depending on rating (Double rating )
+    public List<ServiceProviderDTOOUT> getServiceProviderByRating(Double rating){
+       List<ServiceProviderDTOOUT> providerWithRatingAbove = serviceProviderRepository.findAllByAverageRating(rating);
+       if(providerWithRatingAbove==null){
+           throw new ApiException("No service provider found");
+       }
+       return providerWithRatingAbove;
+    }
 
 
     public void add(ServiceProviderDTOIN serviceProviderDTOIN){

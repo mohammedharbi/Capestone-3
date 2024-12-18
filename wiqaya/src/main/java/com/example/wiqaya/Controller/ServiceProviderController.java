@@ -52,4 +52,11 @@ public class ServiceProviderController {
         return ResponseEntity.status(200).body(serviceProviderService.getServiceProvidersAboveOrders(userId,orderDoneNumber));
     }
 
+    // Endpoint No.
+    // user can display service provider depending on rating (Double rating )
+    @GetMapping("/get-service-provider-by-rating/{rating}")
+    public ResponseEntity<?> getServiceProviderByRating(@PathVariable Double rating){
+     return ResponseEntity.status(200).body(serviceProviderService.getServiceProviderByRating(rating));
+    }
+
 }

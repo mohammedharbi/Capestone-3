@@ -39,7 +39,6 @@ public class ReportService {
 
 
     public void CreateReport(Integer engineerId ,Integer  RequestInspectionId ,ReportDTOIN reportDTOIN){
-
         //check Eng
         Engineer engineer=engineerRepository.findEngineerById(engineerId);
         if(engineer==null)throw new ApiException("there is no engineer found");
@@ -126,6 +125,14 @@ public class ReportService {
 //
 //    }
 
+
+
+
+    // user notify if the eng upload the report
+    // user review the report before publishing it
+
+
+    // Publish the report
     public void publishReport(Integer userId, Integer reportId){
         User user = userRepository.findUserById(userId);
         if (user == null) throw new ApiException("user not found");
@@ -137,6 +144,6 @@ public class ReportService {
 
         report.setIsPublished(true);
         reportRepository.save(report);
-
     }
+
 }
