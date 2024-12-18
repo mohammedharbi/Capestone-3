@@ -38,5 +38,15 @@ public class ReviewController {
       return ResponseEntity.status(200).body(new ApiResponse("Review deleted"));
     }
 
+    // Endpoint No.22
+    @GetMapping("/get-all-reviews-by-service-provider-name/{name}")
+    public ResponseEntity<?> getAllReviewsByServiceProviderName(@PathVariable String name){
+        return ResponseEntity.status(200).body(reviewService.getAllReviewsByServiceProviderName(name));
+    }
+
+    @GetMapping("/user/{userId}/reviews/higher-than/{rating}")
+    public ResponseEntity<?> getAllReviewsHigherThanRating(@PathVariable Integer userId, @PathVariable Double rating){
+        return ResponseEntity.status(200).body(reviewService.getAllReviewsHigherThanRating(userId,rating));
+    }
 
 }

@@ -110,16 +110,63 @@ public class HouseService {
         }
         return houseDTOOUTS;
     }
+
     // Endpoint No.27
-    //sara
+    //Sara
     //admin can get all houses by type and city
+    // this method take three parameters : adminId , Sting houseType , String city
+    // take admin id and check of his existence and role
+    // get List of houses by that type and in that city
+    // I put the list house plain model cuz it's the admin who will see it
+    public List<House> getHousesByTypeAndCity(Integer adminId,String city,String type){
+     User user = userRepository.findUserById(adminId);
+        if (user == null || !user.getRole().equals("admin")) {
+            throw new ApiException("Unauthorized access. Only admin can perform this action.");
+        }
+     List<House> houses = houseRepository.findHousesByCityAndType(city,type);
+     if(houses==null){
+         throw new ApiException("No houses found in type of" + type + " type and in " + city + " city");
+     }
+     return houses;
+    }
+
 
     // Endpoint No.28
-    //hadeel
+    //Hadeel
     //admin can get all houses by status
+    public List<House> getHousesByStatus(Integer adminId,String status){
+        User user = userRepository.findUserById(adminId);
+        if (user == null || !user.getRole().equals("admin")) {
+            throw new ApiException("Unauthorized access. Only admin can perform this action.");
+        }
+        List<House> houses = houseRepository.findHousesByStatus(status);
+        if(houses==null){
+            throw new ApiException("No houses found in that status");
+        }
+        return houses;
+    }
+
 
     // Endpoint No.29
     //mohammed
-    //get avg condation by city (city)
+    //get avg Condition by city (city)
+    public Double getAllHouseAverageConditionPercentageByCity(Integer adminId,Integer conditionPercentage,String city){
+        User admin = userRepository.findUserById(adminId);
+        if(admin==null){throw new ApiException("User not found");}
+        if (!admin.getRole().equalsIgnoreCase("admin")) {
+            throw new ApiException("Not Authorized: Only admin can perform this action");
+        }
+
+        Double avg=0.0;
+        Integer count=0;
+
+        for (House h: houseRepository.findAll()){
+            if(h.getCity().equals(city)){
+                avg += h.getConditionPercentage();
+                count++;
+            }
+        }
+        return avg/count;
+    }
 
  }

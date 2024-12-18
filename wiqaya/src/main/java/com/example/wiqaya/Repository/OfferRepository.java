@@ -15,4 +15,9 @@ public interface OfferRepository extends JpaRepository<Offer, Integer> {
 
 
     @Query("SELECT o FROM Offer o WHERE o.report = :report")
-    List<Offer> findOffersByReport(Report report);}
+    List<Offer> findOffersByReport(Report report);
+
+    List<Offer> findOffersByReportId(Integer id);
+}
+
+

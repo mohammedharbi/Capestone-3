@@ -40,4 +40,6 @@ public class Offer {
     // here  ,, many offers for one report
     @ManyToOne
     private Report report;
+
+
 }

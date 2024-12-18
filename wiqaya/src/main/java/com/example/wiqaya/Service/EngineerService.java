@@ -3,8 +3,10 @@ package com.example.wiqaya.Service;
 import com.example.wiqaya.ApiResponse.ApiException;
 import com.example.wiqaya.DTO.OUT.EngineerDTOOUT;
 import com.example.wiqaya.Model.Engineer;
+import com.example.wiqaya.Model.Report;
 import com.example.wiqaya.Model.RequestInspection;
 import com.example.wiqaya.Repository.EngineerRepository;
+import com.example.wiqaya.Repository.ReportRepository;
 import com.example.wiqaya.Repository.RequestInspectionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,7 @@ public class EngineerService {
 
     private final EngineerRepository engineerRepository;
     private final RequestInspectionRepository requestInspectionRepository;
+    private final ReportRepository reportRepository;
 
 
     public List<EngineerDTOOUT> getAllEngineers() {
@@ -93,7 +96,22 @@ public class EngineerService {
     }
 
     // Endpoint No.30
-    //sara
-    // get eng reported houses number
+    //Sara
+    // get eng reported houses number by eng id
+    // take the eng id , check if he's existing
+    // get list of reports checked by that eng using query
+    // return the number of done reports by that eng ,, list size
+    public Integer getReportsNumByEngId(Integer id){
+        Engineer engineer = engineerRepository.findEngineerById(id);
+        if(engineer==null){
+            throw new ApiException("Engineer not found");
+        }
+        List<Report> reports = reportRepository.findAllByEngineerId(id);
+        if(reports==null){
+            throw new ApiException("No reports found");
+        }
+        return reports.size();
+    }
+
 
 }

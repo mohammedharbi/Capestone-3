@@ -11,6 +11,7 @@ import com.example.wiqaya.Repository.ServiceProviderRepository;
 import com.example.wiqaya.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,13 +69,42 @@ public class ReviewService {
 
     // Endpoint No.22
     //hadeel
-    // user can get all reviews on specife service provider by name
-    //public List<> getAllReviewsByServiceProviderName(){}
+    // user can get all reviews on specific service provider by name
+    public List<ReviewDTOOUT> getAllReviewsByServiceProviderName(String name){
+        List<Review> reviews = reviewRepository.findReviewsByServiceProviderName(name);
+        List<ReviewDTOOUT> reviewDTOOUTS = new ArrayList<>();
+        for (Review r : reviews){
+            String username = r.getUser().getUsername();
+            ReviewDTOOUT reviewDTOOUT = new ReviewDTOOUT(r.getRating(),r.getComment(),username);
+            reviewDTOOUTS.add(reviewDTOOUT);
+        }
+        return reviewDTOOUTS;
+    }
 
     // Endpoint No.23
     //hadeel
     // user get all reviews higher than rating
-    //public List<> getAllReviewsHigherThanRating(Integer userId)
+    public List<ReviewDTOOUT> getAllReviewsHigherThanRating(Integer userId,Double rating) {
+        User user = userRepository.findUserById(userId);
+        if (user == null) {
+            throw new ApiException("User not found with ID: " + userId);
+        }
+        List<Review> reviews = reviewRepository.findReviewsByRatingGreaterThan(rating);
+        if (reviews == null || reviews.isEmpty()) {
+            throw new ApiException("No reviews found with a rating higher than: " + rating);
+        }
+        List<ReviewDTOOUT> reviewDTOOUTList = new ArrayList<>();
+        for (Review review : reviews) {
+            ReviewDTOOUT reviewDTOOUT = new ReviewDTOOUT(
+                    review.getRating(),
+                    review.getComment(),
+                    review.getUser().getUsername()
+            );
+            reviewDTOOUTList.add(reviewDTOOUT);
+        }
+
+        return reviewDTOOUTList;
+    }
 
 
 

@@ -1,6 +1,7 @@
 package com.example.wiqaya.Repository;
 
 import com.example.wiqaya.Model.Engineer;
+import com.example.wiqaya.Model.Report;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -19,4 +20,5 @@ public interface EngineerRepository extends JpaRepository<Engineer,Integer> {
     List<Engineer> findAvailableEngineersForDate(LocalDate date);
 
     List<Engineer> findEngineerByStatusEquals(String status);
+
 }

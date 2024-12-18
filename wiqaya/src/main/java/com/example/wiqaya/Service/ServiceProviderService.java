@@ -8,10 +8,7 @@ import com.example.wiqaya.DTO.OUT.ReportDTOOUT;
 import com.example.wiqaya.DTO.OUT.ReviewDTOOUT;
 import com.example.wiqaya.DTO.OUT.ServiceProviderDTOOUT;
 import com.example.wiqaya.Model.*;
-import com.example.wiqaya.Repository.ReportRepository;
-import com.example.wiqaya.Repository.ReviewRepository;
-import com.example.wiqaya.Repository.ServiceProviderRepository;
-import com.example.wiqaya.Repository.UserRepository;
+import com.example.wiqaya.Repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +22,8 @@ private  final ServiceProviderRepository serviceProviderRepository;
 private final ReviewRepository reviewRepository;
 private final ReportRepository reportRepository;
 private final UserRepository userRepository;
+private final HouseRepository houseRepository;
+    private final OfferRepository offerRepository;
 
     public List<ServiceProviderDTOOUT> getAll() {
         List<ServiceProvider> serviceProviders = serviceProviderRepository.findAll();
@@ -173,6 +172,32 @@ private final UserRepository userRepository;
     // Endpoint No.26
     //hadeel
     //service provider completeOffer(Integer reportId) check if the service provider accepted and change the house status
+    public void completeOffer(Integer serProviderId,Integer offerId) {
+        ServiceProvider serviceProvider = serviceProviderRepository.findServiceProviderById(serProviderId);
+        if(serviceProvider==null){
+            throw new ApiException("Service provider not found");
+        }
+        Offer offer = offerRepository.findOfferById(offerId);
+        if(offer==null){
+            throw new ApiException("offer not found");
+        }
+        // Check if the service provider is authorized to complete the offer
+        if (!offer.getServiceProvider().getId().equals(serProviderId)){
+          throw new ApiException("Unauthorized: You are not allowed to complete this offer.");
+        }
+
+        // Update the offer and house statuses
+        offer.setStatus("Completed");
+        offerRepository.save(offer);
+
+        House house = offer.getReport().getHouse();
+        house.setStatus("Completed");
+        houseRepository.save(house);
+
+        serviceProvider.setDoneOrdersNum(serviceProvider.getDoneOrdersNum() + 1);
+        serviceProviderRepository.save(serviceProvider);
+        System.out.println("Offer completed and house status updated to 'Completed' for house ID: " + house.getId());
+    }
 
 
 }

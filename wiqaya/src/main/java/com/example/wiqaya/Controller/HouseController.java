@@ -39,19 +39,32 @@ public class HouseController {
         return ResponseEntity.status(200).body(new ApiResponse("House deleted"));
     }
 
+    // ------------------------------
+
     @GetMapping("/find-house-by-condition-percentage-less-than/adminId/{admin_id}/conditionPercentage/{conditionPercentage}")
     public ResponseEntity findHouseByConditionPercentage(@PathVariable Integer admin_id,@PathVariable Integer conditionPercentage){
         return ResponseEntity.status(200).body(houseService.findHouseByConditionPercentageLessThan(admin_id,conditionPercentage));
     }
-
-
 
     @GetMapping("/get-my-houses/userid/{userid}")
     public ResponseEntity<?> getMyHouses(@PathVariable Integer userid){
         return ResponseEntity.status(200).body(houseService.getMyHouses(userid));
     }
 
+    // Endpoint No.27
+    //admin can get all houses by city and type
+    @GetMapping("/admin/{adminId}/search-houses-by-city/{city}/and-type/{type}")
+    public ResponseEntity<?> getHousesByTypeAndCity(@PathVariable Integer adminId , @PathVariable String city,@PathVariable String type){
+        return ResponseEntity.status(200).body(houseService.getHousesByTypeAndCity(adminId,city,type));
+    }
 
+
+    // Endpoint No.28
+    //admin can get all houses by status
+    @GetMapping("/admin/{adminId}/search-houses-by-status/{status}")
+    public ResponseEntity<?> getHousesByStatus(@PathVariable Integer adminId,@PathVariable String status){
+        return ResponseEntity.status(200).body(houseService.getHousesByStatus(adminId,status));
+    }
 
 
 }

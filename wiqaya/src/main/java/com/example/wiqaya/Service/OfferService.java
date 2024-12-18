@@ -3,7 +3,6 @@ package com.example.wiqaya.Service;
 import com.example.wiqaya.ApiResponse.ApiException;
 import com.example.wiqaya.DTO.IN.OfferDTOIN;
 import com.example.wiqaya.DTO.OUT.OfferDTOOUT;
-import com.example.wiqaya.DTO.OUT.ReportDTOOUT;
 import com.example.wiqaya.Model.*;
 import com.example.wiqaya.Repository.*;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -147,6 +145,30 @@ public class OfferService {
 
     // Endpoint No.25
     //mohammed
-    // get cheapest offer by the offers recived by id
+    // get cheapest offer by the offers received by id
+    public Offer getCheapestOffer(Integer userId, Integer reportId){
+        User user=userRepository.findUserById(userId);
+        if(user==null)throw new ApiException("user not found");
+
+        Report report =reportRepository.findReportById(reportId);
+        if(report==null)throw new ApiException("no report found with this id");
+
+        if (!report.getRequestInspection().getHouse().getUser().getId().equals(userId)) {
+            throw new ApiException("User with ID " + userId + " does not own the house associated with this report.");
+        }
+
+        List<Offer> offers = offerRepository.findOffersByReportId(reportId);
+        if (offers.isEmpty()) {
+            throw new ApiException("No offers found for report with ID: " + reportId);
+        }
+        Offer cheapestOffer = offers.get(0);
+        for (Offer offer : offers) {
+            if (offer.getPrice() < cheapestOffer.getPrice()) {
+                cheapestOffer = offer;
+            }
+        }
+
+        return cheapestOffer;
+    }
 
 }

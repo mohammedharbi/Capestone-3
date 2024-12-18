@@ -56,4 +56,11 @@ public class OfferController {
 
     }
 
+    // Endpoint No.24
+   //user get the most famous serviceProvider by offerReserved
+    @GetMapping("/get-top-rated-offers-for-user/{userId}/{topN}")
+    public ResponseEntity<?> getTopRatedOffersForUser(@PathVariable Integer userId , @PathVariable Integer topN){
+        return ResponseEntity.status(200).body(offerService.getTopRatedOffersForUser(userId,topN));
+    }
+
 }

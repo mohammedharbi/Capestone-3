@@ -75,16 +75,6 @@ public class RequestInspectionService {
         requestInspectionRepository.save(requestInspection);
     }
 
-    // is there any need to update a request ??
-//    public void updateRequestInspection(Integer id, RequestInspection requestInspection) {
-//        RequestInspection requestInspection1 = requestInspectionRepository.findRequestInspectionById(id);
-//
-//        if (requestInspection1 != null) {
-//            requestInspection.setStatus(requestInspection.getStatus());
-//            requestInspectionRepository.save(requestInspection);
-//        }else throw new ApiException("requestInspection not found");
-//    }
-
     public void updateRequestInspection(Integer id, RequestInspection requestInspection) {
         RequestInspection requestInspection1 = requestInspectionRepository.findRequestInspectionById(id);
 
@@ -161,8 +151,8 @@ public class RequestInspectionService {
 
     // Endpoint No.
     // User check the request inspection status
-    // take the request id search if it exist
-    // if it exist returen the status
+    // take the request id search if it's existing
+    // if it exists return the status
     public String checkRequestStatus(Integer id){
         RequestInspection requestInspection = requestInspectionRepository.findRequestInspectionById(id);
         if(requestInspection==null){
