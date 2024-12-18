@@ -56,8 +56,8 @@ public class UserController {
 
     // Endpoint No.5
     @PutMapping("/verified/provider/user-id/{user_id}/provider-id/{provider_id}/status/{status}")
-    public ResponseEntity<?> verifiedProvider(@PathVariable Integer user_id,@PathVariable Integer provider_id,@PathVariable String status){
-        userService. verifiedProvider(user_id,provider_id,status);
+    public ResponseEntity<?> verifiedProvider(@PathVariable Integer user_id,@PathVariable Integer provider_id,@PathVariable String status, @RequestParam String rejectionReason){
+        userService. verifiedProvider(user_id,provider_id,status,rejectionReason);
         return ResponseEntity.status(200).body(new ApiResponse("Provider is active now!"));
     }
 
