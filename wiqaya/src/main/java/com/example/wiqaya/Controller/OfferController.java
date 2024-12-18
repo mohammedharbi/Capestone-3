@@ -48,4 +48,12 @@ public class OfferController {
        return ResponseEntity.status(200).body(new ApiResponse("offer sent to report id: "+reportid));
     }
 
+   //hadeel
+    @PutMapping("/accept-offer/userid/{userid}/offerid/{offerid}")
+    public ResponseEntity acceptOffer(@PathVariable Integer userid,@PathVariable Integer offerid){
+        offerService.acceptOffer(userid,offerid);
+        return ResponseEntity.status(200).body(new ApiResponse("offer id: "+offerid+" has been accept"));
+
+    }
+
 }
