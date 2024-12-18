@@ -47,4 +47,12 @@ public class EngineerController {
       return ResponseEntity.status(200).body(engineerService.checkMyStatus(id));
     }
 
+
+    // Endpoint No.6
+    // Eng get all the request Inspection that assign to him
+    @GetMapping("/get-eng-request-by-id/{id}")
+    public ResponseEntity<?> getAllRequestInspectionByEngId(@PathVariable Integer id){
+        return ResponseEntity.status(200).body(engineerService.getAllRequestInspectionByEngId(id));
+    }
+
 }

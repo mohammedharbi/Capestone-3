@@ -40,5 +40,5 @@ public class ReportDTOOUT {
 
     private LocalDate ReportedDate;
 
-
+    private String houseCity;
 }

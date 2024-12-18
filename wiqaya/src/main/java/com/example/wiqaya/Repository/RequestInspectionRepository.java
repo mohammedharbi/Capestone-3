@@ -25,5 +25,7 @@ public interface RequestInspectionRepository extends JpaRepository<RequestInspec
     @Query("SELECT r FROM RequestInspection r WHERE r.date = :date")
     List<RequestInspection> findByDate(@Param("date") LocalDate date);
 
+    @Query("select r from RequestInspection r where r.engineer.id=?1")
+    List<RequestInspection> findRequestInspectionByEngineerId(Integer id);
 
 }

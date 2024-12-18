@@ -45,7 +45,6 @@ private Integer doneOrdersNum;
 private Double averageRating;
 
     @OneToMany(cascade = CascadeType.ALL,mappedBy ="serviceProvider" )
-    @JsonIgnore
     private Set<Offer> Offer;
 
     @OneToMany(cascade = CascadeType.ALL,mappedBy ="serviceProvider" )
