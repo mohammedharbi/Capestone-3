@@ -145,6 +145,17 @@ public class UserService {
      return requestInspections;
     }
 
+    public List<Engineer> getAllEngUnderReview(Integer adminId){
+        User admin = userRepository.findUserById(adminId);
+        if(admin==null){throw new ApiException("User not found");}
+        if (!admin.getRole().equalsIgnoreCase("admin")) {
+            throw new ApiException("Not Authorized: Only admin can perform this action");
+        }
+        List<Engineer> engineers = engineerRepository.findEngineerByStatusEquals("UnderReview");
+        if (engineers.isEmpty()) {throw new ApiException("No engineers found UnderReview");}
+        return engineers;
+    }
+
 
 
  }

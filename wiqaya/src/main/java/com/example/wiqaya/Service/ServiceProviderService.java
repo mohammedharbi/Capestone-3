@@ -11,6 +11,7 @@ import com.example.wiqaya.Model.*;
 import com.example.wiqaya.Repository.ReportRepository;
 import com.example.wiqaya.Repository.ReviewRepository;
 import com.example.wiqaya.Repository.ServiceProviderRepository;
+import com.example.wiqaya.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,7 @@ public class ServiceProviderService {
 private  final ServiceProviderRepository serviceProviderRepository;
 private final ReviewRepository reviewRepository;
 private final ReportRepository reportRepository;
+private final UserRepository userRepository;
 
     public List<ServiceProviderDTOOUT> getAll() {
         List<ServiceProvider> serviceProviders = serviceProviderRepository.findAll();
@@ -64,7 +66,7 @@ private final ReportRepository reportRepository;
     public void add(ServiceProviderDTOIN serviceProviderDTOIN){
         ServiceProvider serviceProvider = new ServiceProvider(null,
                 serviceProviderDTOIN.getName(),serviceProviderDTOIN.getEmail(), serviceProviderDTOIN.getPhoneNumber(),
-                serviceProviderDTOIN.getCommercialRegistration(),"Inactive",null,0,0.0,null,null);
+                serviceProviderDTOIN.getCommercialRegistration(),"UnderReview","",0,0.0,null,null);
         serviceProviderRepository.save(serviceProvider);
     }
 
@@ -140,5 +142,16 @@ private final ReportRepository reportRepository;
         }
     }
 
+    public List<ServiceProvider> getServiceProvidersAboveOrders(Integer userId, Integer doneOrdersNum) {
+        User user = userRepository.findUserById(userId);
+        if (user == null) {
+            throw new ApiException("user not found");
+        }
 
+        List<ServiceProvider> serviceProvidersAboveOrders = serviceProviderRepository.findServiceProviderByDoneOrdersNumGreaterThanEqual(doneOrdersNum);
+        if (serviceProvidersAboveOrders.isEmpty()) {
+            throw new ApiException("there are no serviceProviders above orders done input");
+        }
+        return serviceProvidersAboveOrders;
+    }
 }

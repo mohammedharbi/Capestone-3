@@ -18,5 +18,5 @@ public interface EngineerRepository extends JpaRepository<Engineer,Integer> {
             "AND (SELECT COUNT(r) FROM RequestInspection r WHERE r.engineer = e AND r.date = :date) < 5")
     List<Engineer> findAvailableEngineersForDate(LocalDate date);
 
-
+    List<Engineer> findEngineerByStatusEquals(String status);
 }

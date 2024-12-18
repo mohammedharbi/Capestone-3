@@ -68,4 +68,9 @@ public class UserController {
         return ResponseEntity.status(200).body(userService.getAllRequestForOneUser(id));
     }
 
+    @GetMapping("get-all-eng-under-review/adminId/{adminId}")
+    public ResponseEntity<?> getAllEngUnderReviewReview(@PathVariable Integer adminId){
+        return ResponseEntity.status(200).body(userService.getAllEngUnderReview(adminId));
+    }
+
 }

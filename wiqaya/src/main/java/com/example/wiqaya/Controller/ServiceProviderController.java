@@ -47,4 +47,9 @@ public class ServiceProviderController {
         return ResponseEntity.status(200).body(serviceProviderService.ProviderGetPublishedReport(id,city));
     }
 
+    @GetMapping("/get-service-providers-above-orders/userId/{userId}/order-done-number/{orderDoneNumber}")
+    public ResponseEntity<?> getServiceProvidersAboveOrders(@PathVariable Integer userId,@PathVariable Integer orderDoneNumber){
+        return ResponseEntity.status(200).body(serviceProviderService.getServiceProvidersAboveOrders(userId,orderDoneNumber));
+    }
+
 }
