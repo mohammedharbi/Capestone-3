@@ -39,4 +39,9 @@ public class HouseController {
         return ResponseEntity.status(200).body(new ApiResponse("House deleted"));
     }
 
+    @GetMapping("/find-house-by-condition-percentage-less-than/adminId/{admin_id}/conditionPercentage/{conditionPercentage}")
+    public ResponseEntity findHouseByConditionPercentage(@PathVariable Integer admin_id,@PathVariable Integer conditionPercentage){
+        return ResponseEntity.status(200).body(houseService.findHouseByConditionPercentageLessThan(admin_id,conditionPercentage));
+    }
+
 }
