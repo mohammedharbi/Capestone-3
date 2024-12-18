@@ -35,7 +35,6 @@ public class RequestInspection {
 
     @ManyToOne
     @JoinColumn(name = "house_id", referencedColumnName = "id")
-    @JsonIgnore
     private House house;
 
 

@@ -30,6 +30,7 @@ public class EngineerService {
 
     public void addEngineer(Engineer engineer) {
         engineer.setStatus("UnderReview");
+        engineer.setAvailability(false);
         engineerRepository.save(engineer);
     }
 

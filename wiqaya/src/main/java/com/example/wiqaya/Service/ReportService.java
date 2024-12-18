@@ -49,6 +49,8 @@ public class ReportService {
    if(!requestInspection.getEngineer().getId().equals(engineerId))throw new ApiException("the engineer didn't assign to this request inspection ");
 
 
+   Boolean isPublished=false;
+
         int trueCount = 0;
 
         if (reportDTOIN.getStructuralElements()) trueCount++;
@@ -61,10 +63,14 @@ public class ReportService {
         if (reportDTOIN.getExteriorSurroundings()) trueCount++;
 
         // Calculate percentage (based on the 8 boolean values)
-        int percentage = (trueCount * 100) / 8;
+        Integer percentage = (trueCount * 100) / 8;
         House house=requestInspection.getHouse();
+
+
         // add set for condaition
+        house.setConditionPercentage(percentage);
         // add set for status
+       house.setStatus("checked");
 
         Report report = new Report(
                 null, // ID
@@ -79,9 +85,9 @@ public class ReportService {
                 percentage, // Set the percentage here
                 reportDTOIN.getNotes(),
                 reportDTOIN.getRequiredItems(),
-                LocalDate.now(), // Set the ReportedDate as the current date
-                reportDTOIN.getIsPublished()
-                ,engineer,house,
+                LocalDate.now(),// Set the ReportedDate as the current date
+                false , //here is the first publish status by defult false
+                engineer,house,
                 null, // the offers are null when the report is added
                 requestInspection// set reported
         );

@@ -54,6 +54,7 @@ public class House {
     private User user;
 
     @OneToMany(cascade = CascadeType.ALL , mappedBy = "house")
+    @JsonIgnore
     private Set<RequestInspection> requestInspections;
 
     @OneToMany(cascade = CascadeType.ALL,mappedBy ="house" )
