@@ -38,7 +38,7 @@ public class ReportService {
     }
 
 
-    public void add(Integer engineerId ,Integer  RequestInspectionId ,ReportDTOIN reportDTOIN){
+    public void CreateReport(Integer engineerId ,Integer  RequestInspectionId ,ReportDTOIN reportDTOIN){
 
         //check Eng
         Engineer engineer=engineerRepository.findEngineerById(engineerId);

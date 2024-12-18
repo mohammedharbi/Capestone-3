@@ -1,6 +1,7 @@
 package com.example.wiqaya.Controller;
 
 import com.example.wiqaya.ApiResponse.ApiResponse;
+import com.example.wiqaya.DTO.IN.OfferDTOIN;
 import com.example.wiqaya.Model.Offer;
 import com.example.wiqaya.Service.OfferService;
 import jakarta.validation.Valid;
@@ -20,11 +21,6 @@ public class OfferController {
         return ResponseEntity.status(200).body(offerService.getAllOffers());
     }
 
-    @PostMapping("/add")
-    public ResponseEntity addOffer(@RequestBody @Valid Offer offer) {
-        offerService.addOffer(offer);
-        return ResponseEntity.status(200).body(new ApiResponse("Offer added"));
-    }
 
     @PutMapping("/update/{id}")
     public ResponseEntity updateOffer(@PathVariable Integer id, @RequestBody @Valid Offer offer) {
@@ -44,4 +40,13 @@ public class OfferController {
        return ResponseEntity.status(200).body(offerService.getOffersByReport(userid,reportid));
     }
 
+
+    //hadeel
+    @PostMapping("/send-offer/providerid/{providerid}/reportid/{reportid}")
+    public ResponseEntity sendOffer(@PathVariable Integer providerid, @PathVariable Integer reportid,@Valid @RequestBody OfferDTOIN offerDTOIN){
+        offerService.sendOffer(providerid,reportid,offerDTOIN);
+       return ResponseEntity.status(200).body(new ApiResponse("offer sent to report id: "+reportid));
+
+
+    }
 }

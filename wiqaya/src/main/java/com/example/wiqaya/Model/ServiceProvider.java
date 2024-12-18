@@ -45,9 +45,9 @@ private Integer doneOrdersNum;
 private Double averageRating;
 
     @OneToMany(cascade = CascadeType.ALL,mappedBy ="serviceProvider" )
-    private Set<Offer> offers;
+    private Set<Offer> Offer;
 
     @OneToMany(cascade = CascadeType.ALL,mappedBy ="serviceProvider" )
-    private Set<Review> reviews;
+    private Set<Review> Review;
 
 }
