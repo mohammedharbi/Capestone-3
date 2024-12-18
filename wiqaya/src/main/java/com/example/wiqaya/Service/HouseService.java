@@ -77,6 +77,8 @@ public class HouseService {
     }
 
 
+    // Endpoint No.5
+    //Mohammed
     public List<House> findHouseByConditionPercentageLessThan(Integer adminId,Integer conditionPercentage){
         User admin = userRepository.findUserById(adminId);
         if(admin==null){throw new ApiException("User not found");}
@@ -92,7 +94,8 @@ public class HouseService {
     }
 
 
-    // hadeel
+    // Endpoint No.6
+    //Hadeel
     public List<HouseDTOOUT2> getMyHouses(Integer userid){
         User user=userRepository.findUserById(userid);
         if(user==null)throw new ApiException("user not found");

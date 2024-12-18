@@ -11,6 +11,7 @@ import lombok.*;
 @Entity
 @Getter
 @Setter
+//Hadeel
 public class Offer {
 
     @Id

@@ -117,7 +117,8 @@ public class RequestInspectionService {
 //        }
         //flow 2
 
-        // Endpoint No.2
+    // Endpoint No.7
+    //mohammed
     // admin can check the availability on specifies day (Integer day) not working
         public List<Engineer> getAvailableEngineersForDate(LocalDate date) {
             if (date == null) {
@@ -135,27 +136,10 @@ public class RequestInspectionService {
         }
 
 
-        //flow 3
-//        List<Engineer> availableEngineers = new ArrayList<>();
-//        for (Engineer engineer : engineers) {
-//            Integer countEngineer = 0;
-//            for (RequestInspection requestInspection : requestInspections) {
-//                if (requestInspection.getDate().equals(date)) {
-//                    if (requestInspection.getEngineer().getId().equals(engineer.getId())) {
-//                         countEngineer ++;
-//                    }
-//                }
-//            }
-//            if (countEngineer < 5){
-//                availableEngineers.add(engineer);
-//            }
-//        }
-//        return availableEngineers;
-//    }
 
 
-    // Endpoint No.3
-    // assign eng to a requestInspection
+    // Endpoint No.8
+    //Mohammed
     public void assignEng(Integer adminId, Integer engId, Integer requestInspectionId){
         User admin = userRepository.findUserById(adminId);
         if (admin == null) {throw new ApiException("user not found");}

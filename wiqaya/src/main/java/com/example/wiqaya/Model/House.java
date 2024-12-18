@@ -13,6 +13,7 @@ import java.util.Set;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+//sara
 public class House {
 
     @Id

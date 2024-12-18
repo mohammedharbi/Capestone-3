@@ -16,6 +16,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+//mohammed
 public class Engineer {
 
     @Id
@@ -23,7 +24,7 @@ public class Engineer {
     private Integer id;
 
     @NotEmpty(message = "full name is empty")
-    @Size(min = 5, max = 30 , message = "full name must be between 5 and 30 characters")
+    @Size(min = 5, max = 30, message = "full name must be between 5 and 30 characters")
     @Column(columnDefinition = "varchar(30) not null")
     private String fullName;
 
@@ -50,7 +51,7 @@ public class Engineer {
 
     @Pattern(regexp = "^(UnderReview|Approved|Rejected)$", message = "Engineer status must be either UnderReview | Approved | Rejected")
     @Column(columnDefinition = "varchar(20)")
-    private String status ; // it will be Inactive by default therefore no need for @NotEmpty. the admin  will check the Engineer accreditation number then decide to active it or not
+    private String status; // it will be Inactive by default therefore no need for @NotEmpty. the admin  will check the Engineer accreditation number then decide to active it or not
 
     @Column(nullable = true)
     private String rejectionReason;
@@ -62,7 +63,7 @@ public class Engineer {
     @JsonIgnore
     private Set<RequestInspection> requestInspections;
 
-    @OneToMany(cascade = CascadeType.ALL,mappedBy ="engineer" )
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "engineer")
     private Set<Report> reports;
 
 }

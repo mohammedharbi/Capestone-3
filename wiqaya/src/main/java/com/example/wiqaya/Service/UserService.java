@@ -70,7 +70,9 @@ public class UserService {
 
     // -----------------
 
+
     // // Endpoint No.1
+    //Sara
     // admin check Eng isVerified
     public void verifiedEng(Integer userId, Integer engId, String status, String rejectionReason) {
         // Verify if the user exists
@@ -107,7 +109,8 @@ public class UserService {
 
 
 
-    // Endpoint No.4
+    // Endpoint No.2
+    //sara
     // Admin will check the license of the ServiceProvider and decide the status
     public void verifiedProvider(Integer userId, Integer providerId, String status, String rejectionReason) {
         User user = userRepository.findUserById(userId);
@@ -135,7 +138,8 @@ public class UserService {
     }
 
 
-    // Endpoint No.
+    // Endpoint No.3
+    //sara
     // user will display requestsInceptions that he owns()
     public List<RequestInspection> getAllRequestForOneUser(Integer userId){
      List<RequestInspection> requestInspections = requestInspectionRepository.findAllRequestForOneUser(userId);
@@ -145,6 +149,8 @@ public class UserService {
      return requestInspections;
     }
 
+    // Endpoint No.4
+    //Mohammed
     public List<Engineer> getAllEngUnderReview(Integer adminId){
         User admin = userRepository.findUserById(adminId);
         if(admin==null){throw new ApiException("User not found");}
