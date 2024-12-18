@@ -106,7 +106,7 @@ public class UserService {
 
     // Endpoint No.4
     // Admin will check the license of the ServiceProvider and decide the status
-    public void verifiedProvider(Integer userId, Integer providerId, String status) {
+    public void verifiedProvider(Integer userId, Integer providerId, String status, String rejectionReason) {
         User user = userRepository.findUserById(userId);
         if (user == null) {
             throw new ApiException("User not found");

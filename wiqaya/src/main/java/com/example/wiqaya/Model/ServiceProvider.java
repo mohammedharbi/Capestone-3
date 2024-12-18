@@ -31,9 +31,12 @@ private String phoneNumber;
     @Column(columnDefinition = "varchar(10) not null")
     private String commercialRegistration;
 
-   @Pattern(regexp = "^(Active|Inactive)$", message = "Service provider status must be either 'Active' or 'Inactive'")
-    @Column(columnDefinition = "varchar(8) ")
+   @Pattern(regexp = "^(UnderReview|Approved|Rejected)$", message = "Service provider status must be either 'Active' or 'Inactive'")
+    @Column(columnDefinition = "varchar(11) ")
 private String status;
+
+    @Column(nullable = true)
+    private String rejectionReason;
 
  @Column(columnDefinition = "int not null")
 private Integer doneOrdersNum;

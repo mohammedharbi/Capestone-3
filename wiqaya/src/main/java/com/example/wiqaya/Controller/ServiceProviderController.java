@@ -3,7 +3,6 @@ package com.example.wiqaya.Controller;
 
 import com.example.wiqaya.ApiResponse.ApiResponse;
 import com.example.wiqaya.DTO.IN.HouseDTOIN;
-import com.example.wiqaya.DTO.IN.OfferDTOIN;
 import com.example.wiqaya.DTO.IN.ServiceProviderDTOIN;
 import com.example.wiqaya.Model.ServiceProvider;
 import com.example.wiqaya.Service.ServiceProviderService;
@@ -35,5 +34,9 @@ public class ServiceProviderController {
         return  ResponseEntity.status(200).body(new ApiResponse("service provider updated"));
     }
 
-
+    @GetMapping("/check-my-status-service-provider/service-provider/{providerId}")
+    public ResponseEntity checkMyStatus(@PathVariable Integer providerId){
+        String response = serviceProviderService.checkMyStatusServiceProvider(providerId);
+        return ResponseEntity.status(200).body(response);
+    }
 }
