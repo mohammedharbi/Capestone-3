@@ -12,6 +12,7 @@ import java.util.List;
 public interface HouseRepository extends JpaRepository<House,Integer> {
     House findHouseById(Integer id);
 
+    List<House>findHouseByUser(User user);
     House findHouseByUserAndCityAndLocationAndType(User user, String city, String location, String type);
 
     List<House> findHouseByConditionPercentageLessThan(Integer percentage);

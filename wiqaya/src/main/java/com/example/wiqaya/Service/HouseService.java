@@ -3,6 +3,7 @@ package com.example.wiqaya.Service;
 import com.example.wiqaya.ApiResponse.ApiException;
 import com.example.wiqaya.DTO.IN.HouseDTOIN;
 import com.example.wiqaya.DTO.OUT.HouseDTOOUT;
+import com.example.wiqaya.DTO.OUT.HouseDTOOUT2;
 import com.example.wiqaya.Model.House;
 import com.example.wiqaya.Model.User;
 import com.example.wiqaya.Repository.HouseRepository;
@@ -88,6 +89,23 @@ public class HouseService {
             throw new ApiException("Houses not found with below the condition percentage");
         }
         return houses;
+    }
+
+
+    // get all houses
+    public List<HouseDTOOUT2> getMyHouses(Integer userid){
+        User user=userRepository.findUserById(userid);
+        if(user==null)throw new ApiException("user not found");
+        if(user.getRole().equalsIgnoreCase("admin"))throw new ApiException("admin doesn't own houses");
+
+        List<House> houses = houseRepository.findHouseByUser(user);
+        if(houses.isEmpty() || houses==null)throw new ApiException("no houses found");
+        List<HouseDTOOUT2> houseDTOOUTS = new ArrayList<>();
+        for (House h : houses){
+            HouseDTOOUT2 houseDTOOUT = new HouseDTOOUT2(h.getCity(),h.getLocation(),h.getType(),h.getStatus(),h.getConditionPercentage());
+            houseDTOOUTS.add(houseDTOOUT);
+        }
+        return houseDTOOUTS;
     }
 
  }

@@ -44,4 +44,14 @@ public class HouseController {
         return ResponseEntity.status(200).body(houseService.findHouseByConditionPercentageLessThan(admin_id,conditionPercentage));
     }
 
+
+
+    @GetMapping("/get-my-houses/userid/{userid}")
+    public ResponseEntity<?> getMyHouses(@PathVariable Integer userid){
+        return ResponseEntity.status(200).body(houseService.getMyHouses(userid));
+    }
+
+
+
+
 }
