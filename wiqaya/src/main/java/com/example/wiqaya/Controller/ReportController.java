@@ -20,9 +20,9 @@ public class ReportController {
         return ResponseEntity.status(200).body( reportService.getAll());
     }
 
-    @PostMapping("/add/engineerid/{engineerId}/requestinspectionid/{RequestInspectionId}")
-    public ResponseEntity add( @PathVariable Integer engineerId,@PathVariable Integer RequestInspectionId,@RequestBody @Valid ReportDTOIN reportDTOIN){
-        reportService.add(engineerId,RequestInspectionId,reportDTOIN);
+    @PostMapping("/create-report/engineerid/{engineerId}/requestinspectionid/{RequestInspectionId}")
+    public ResponseEntity CreateReport( @PathVariable Integer engineerId,@PathVariable Integer RequestInspectionId,@RequestBody @Valid ReportDTOIN reportDTOIN){
+        reportService.CreateReport(engineerId,RequestInspectionId,reportDTOIN);
         return ResponseEntity.status(200).body(new ApiResponse("report created successfully"));
     }
 
