@@ -58,7 +58,8 @@ public class EngineerService {
 
     // --------------------------------------------------------
 
-    // Endpoint No.5
+    // Endpoint No.12
+    //sara
     // Eng check on his status if he get approved or rejected
     public String checkMyStatus(Integer id) {
         Engineer engineer = engineerRepository.findEngineerById(id);
@@ -80,7 +81,8 @@ public class EngineerService {
     }
 
 
-    // Endpoint No.6
+    // Endpoint No.13
+    //sara
     // Eng get all the request Inspection that assign to him
     public List<RequestInspection> getAllRequestInspectionByEngId(Integer id){
      if(!engineerRepository.existsById(id)){
@@ -89,5 +91,9 @@ public class EngineerService {
       List<RequestInspection> engRequests = requestInspectionRepository.findRequestInspectionByEngineerId(id);
       return engRequests.isEmpty()? null:engRequests;
     }
+
+    // Endpoint No.30
+    //sara
+    // get eng reported houses number
 
 }

@@ -61,17 +61,6 @@ private final UserRepository userRepository;
         return serviceProviderDTOOUTS;
     }
 
-    // Endpoint No.
-    // user can display service provider depending on rating (Double rating )
-    public List<ServiceProviderDTOOUT> getServiceProviderByRating(Double rating){
-       List<ServiceProviderDTOOUT> providerWithRatingAbove = serviceProviderRepository.findAllByAverageRating(rating);
-       if(providerWithRatingAbove==null){
-           throw new ApiException("No service provider found");
-       }
-       return providerWithRatingAbove;
-    }
-
-
     public void add(ServiceProviderDTOIN serviceProviderDTOIN){
         ServiceProvider serviceProvider = new ServiceProvider(null,
                 serviceProviderDTOIN.getName(),serviceProviderDTOIN.getEmail(), serviceProviderDTOIN.getPhoneNumber(),
@@ -92,7 +81,21 @@ private final UserRepository userRepository;
 
     // -----------------------------------------------
 
-    // Endpoint No. ?
+
+    // Endpoint No.17
+    //sara
+    // user can display service provider depending on rating (Double rating )
+    public List<ServiceProvider> getServiceProviderByRating(Double rating){
+        List<ServiceProvider> providerWithRatingAbove = serviceProviderRepository.findServiceProviderByAverageRatingGreaterThanEqual(rating);
+        if(providerWithRatingAbove==null){
+            throw new ApiException("No service provider found");
+        }
+        return providerWithRatingAbove;
+    }
+
+
+    // Endpoint No. 18
+    //sara
     // Service provider will be able to display all reporters if it’s publish and in the same city
     // service provider give his id in the path
     // check if the service provider exist
@@ -129,7 +132,8 @@ private final UserRepository userRepository;
         return reportDTOOUTS;
     }
 
-    // Endpoint No.
+    // Endpoint No.19
+    //mohammed
     public String checkMyStatusServiceProvider(Integer id) {
         ServiceProvider serviceProvider = serviceProviderRepository.findServiceProviderById(id);
 
@@ -151,6 +155,8 @@ private final UserRepository userRepository;
         }
     }
 
+    // Endpoint No.20
+    //mohammed
     public List<ServiceProvider> getServiceProvidersAboveOrders(Integer userId, Integer doneOrdersNum) {
         User user = userRepository.findUserById(userId);
         if (user == null) {
@@ -163,4 +169,10 @@ private final UserRepository userRepository;
         }
         return serviceProvidersAboveOrders;
     }
+
+    // Endpoint No.26
+    //hadeel
+    //service provider completeOffer(Integer reportId) check if the service provider accepted and change the house status
+
+
 }

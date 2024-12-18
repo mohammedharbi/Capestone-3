@@ -66,6 +66,16 @@ public class ReviewService {
       reviewRepository.delete(review);
     }
 
+    // Endpoint No.22
+    //hadeel
+    // user can get all reviews on specife service provider by name
+    //public List<> getAllReviewsByServiceProviderName(){}
+
+    // Endpoint No.23
+    //hadeel
+    // user get all reviews higher than rating
+    //public List<> getAllReviewsHigherThanRating(Integer userId)
+
 
 
 }

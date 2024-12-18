@@ -54,6 +54,7 @@ public class OfferService {
         }else throw new ApiException("Offer Not Found");
     }
 
+    // Endpoint No.14
     //hadeel
     public void sendOffer(Integer serviceProviderid, Integer reportid, OfferDTOIN offerDTOIN){
         //check report
@@ -83,7 +84,8 @@ public class OfferService {
     }
 
 
-    //Hadeel
+    // Endpoint No.15
+    //hadeel
     public List<OfferDTOOUT> getOffersByReport(Integer userid, Integer reportid){
         Report report =reportRepository.findReportById(reportid);
         if(report==null)throw new ApiException("no report found with this id");
@@ -106,6 +108,8 @@ public class OfferService {
     }
 
 
+    // Endpoint No.16
+    //hadeel
     public void acceptOffer(Integer userid,Integer offerid){
         //check user
         User user=userRepository.findUserById(userid);
@@ -135,7 +139,14 @@ public class OfferService {
             }
         }
 
-
     }
+
+    // Endpoint No.24
+    //sara
+    //user get the most famous serviceProvider by offerRecived
+
+    // Endpoint No.25
+    //mohammed
+    // get cheapest offer by the offers recived by id
 
 }

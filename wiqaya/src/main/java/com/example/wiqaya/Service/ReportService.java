@@ -38,6 +38,9 @@ public class ReportService {
     }
 
 
+    // Endpoint No.10
+    //hadeel
+    //deep logic endpoint
     public void CreateReport(Integer engineerId ,Integer  RequestInspectionId ,ReportDTOIN reportDTOIN){
         //check Eng
         Engineer engineer=engineerRepository.findEngineerById(engineerId);
@@ -107,32 +110,9 @@ public class ReportService {
     }
 
 
-//    // Method to assign an engineer to a report
-//    public Report assignEngineerToReport(Integer reportId, Integer engineerId) {
-//        // Retrieve the report by ID
-//        Report report = reportRepository.findById(reportId)
-//                .orElseThrow(() -> new IllegalArgumentException("Report not found with ID: " + reportId));
-//
-//        // Retrieve the engineer by ID
-//        Engineer engineer = engineerRepository.findById(engineerId)
-//                .orElseThrow(() -> new IllegalArgumentException("Engineer not found with ID: " + engineerId));
-//
-//        // Assign the engineer to the report
-//        report.setEngineer(engineer);
-//
-//        // Save the updated report with the assigned engineer
-//        return reportRepository.save(report);
-//
-//    }
 
-
-
-
-    // user notify if the eng upload the report
-    // user review the report before publishing it
-
-
-    // Publish the report
+    // Endpoint No.11
+    //Mohammed
     public void publishReport(Integer userId, Integer reportId){
         User user = userRepository.findUserById(userId);
         if (user == null) throw new ApiException("user not found");

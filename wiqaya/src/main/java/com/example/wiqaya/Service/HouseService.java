@@ -110,5 +110,16 @@ public class HouseService {
         }
         return houseDTOOUTS;
     }
+    // Endpoint No.27
+    //sara
+    //admin can get all houses by type and city
+
+    // Endpoint No.28
+    //hadeel
+    //admin can get all houses by status
+
+    // Endpoint No.29
+    //mohammed
+    //get avg condation by city (city)
 
  }

@@ -56,6 +56,9 @@ public class Engineer {
     @Column(nullable = true)
     private String rejectionReason;
 
+//    @Column(columnDefinition = "int not null")
+//    private Integer reportedHousesNum;
+
     @Column(columnDefinition = "varchar(11) ")
     private Boolean availability = false;
 

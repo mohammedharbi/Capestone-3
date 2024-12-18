@@ -20,7 +20,7 @@ public class ServiceProvider {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(columnDefinition = "varchar(50) not null")
+    @Column(columnDefinition = "varchar(50) not null unique")
    private String name;
 
    @Column(columnDefinition = "varchar(100) not null")

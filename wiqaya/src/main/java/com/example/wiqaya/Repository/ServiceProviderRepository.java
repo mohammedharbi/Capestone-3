@@ -12,5 +12,5 @@ public interface ServiceProviderRepository extends JpaRepository<ServiceProvider
 
  List<ServiceProvider> findServiceProviderByDoneOrdersNumGreaterThanEqual(Integer doneOrdersNum);
 
-
+ List<ServiceProvider> findServiceProviderByAverageRatingGreaterThanEqual(Double averageRating);
 }

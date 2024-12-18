@@ -45,7 +45,7 @@ public class House {
     //    offers_pending,     // Reviewing safety company offers
     //    offer_accepted,     // Chosen safety company starts work
     //    Completed           // Safety work completed
-    @Pattern(regexp = "^(un_checked|pending_inspection|checked|completed)$", message = "Status must be one of the following: un_checked, pending_inspection, inspected, offers_pending, offer_accepted, or completed")
+    @Pattern(regexp = "^(un_checked|pending_inspection|checked|inProgress|completed)$", message = "Status must be one of the following: un_checked, pending_inspection, inspected, offers_pending, offer_accepted, or completed")
     @Column(columnDefinition = "varchar(20) not null")
     private String status; // Default value "un checked"
 

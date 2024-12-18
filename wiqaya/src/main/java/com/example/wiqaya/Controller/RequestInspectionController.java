@@ -25,7 +25,7 @@ public class RequestInspectionController {
 
     @PostMapping("/add/user_id/{user_id}/house_id/{house_id}")
     public ResponseEntity addRequestInspection(@PathVariable Integer user_id,@PathVariable Integer house_id,@RequestBody @Valid RequestInspectionDTOIN requestInspectionDTOIN) {
-        requestInspectionService.addRequestInspection(user_id,house_id,requestInspectionDTOIN);
+        requestInspectionService.createRequestInspection(user_id,house_id,requestInspectionDTOIN);
         return ResponseEntity.status(200).body(new ApiResponse("request inspection added"));
     }
 

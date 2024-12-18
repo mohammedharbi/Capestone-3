@@ -56,7 +56,9 @@ public class RequestInspectionService {
         return requestInspectionDTOOUTS;
     }
 
-    public void addRequestInspection(Integer user_id, Integer house_id, RequestInspectionDTOIN requestInspectionDTOIN) {
+    // Endpoint No.21
+    //mohammed
+    public void createRequestInspection(Integer user_id, Integer house_id, RequestInspectionDTOIN requestInspectionDTOIN) {
         House house = houseRepository.findHouseById(house_id);
         User user = userRepository.findUserById(user_id);
         if (house == null) {
@@ -68,6 +70,7 @@ public class RequestInspectionService {
         if (!house.getUser().getId().equals(user_id)) {
             throw new ApiException("user doesn't own the house");
         }
+        if (getAvailableEngineersForDate(requestInspectionDTOIN.getDate()) == null) {throw new ApiException("there is no available engineers on this date please enter a new date");}
         RequestInspection requestInspection = new RequestInspection(null, requestInspectionDTOIN.getDate(), "Pending", null, house, null);
         requestInspectionRepository.save(requestInspection);
     }
@@ -99,23 +102,6 @@ public class RequestInspectionService {
         } else throw new ApiException("requestInspection not found");
     }
 
-
-//    public List<Engineer> isEngineerAvailable(LocalDate date) {
-//        List<RequestInspection> requestInspections = requestInspectionRepository.findAll();
-//        List<Engineer> engineers = engineerRepository.findAll();
-//        if (engineers == null|| engineers.isEmpty()) {
-//            throw new ApiException("engineers not found");
-//        }
-
-        //flow 1
-//        List<Engineer> availableEngineers = new ArrayList<>();
-//        for (Engineer engineer : engineers) {
-//            Integer requestsForDate = requestInspectionRepository.countByEngineerAndDate(engineer, date);
-//            if (requestsForDate < 5) {
-//                availableEngineers.add(engineer);
-//            }
-//        }
-        //flow 2
 
     // Endpoint No.7
     //mohammed
@@ -186,6 +172,7 @@ public class RequestInspectionService {
     }
 
 
+    // Endpoint No.9
     //hadeel
     public void CancelRequestInspection(Integer userid, Integer requestid){
     //check request id if found
@@ -203,11 +190,9 @@ public class RequestInspectionService {
         if(requestInspection.getStatus().equalsIgnoreCase("Reported"))
             throw new ApiException("Request already Reported");
 
-//احسب الفرق بين تاريخ اليوم وتاريخ الطلب
 
         Period period = Period.between(LocalDate.now(),requestInspection.getDate());
 
-// اذا كان اقل من يوم ثرو اكسبشن
         if (period.getDays() < 1) {
             throw new ApiException(period.getDays()+"  Request can only be cancelled 1 day before the inspection date");
         }
