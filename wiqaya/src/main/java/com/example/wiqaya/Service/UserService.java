@@ -4,9 +4,11 @@ import com.example.wiqaya.ApiResponse.ApiException;
 import com.example.wiqaya.DTO.IN.UserDTOIN;
 import com.example.wiqaya.DTO.OUT.UserDTOOUT;
 import com.example.wiqaya.Model.Engineer;
+import com.example.wiqaya.Model.RequestInspection;
 import com.example.wiqaya.Model.ServiceProvider;
 import com.example.wiqaya.Model.User;
 import com.example.wiqaya.Repository.EngineerRepository;
+import com.example.wiqaya.Repository.RequestInspectionRepository;
 import com.example.wiqaya.Repository.ServiceProviderRepository;
 import com.example.wiqaya.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +24,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final EngineerRepository engineerRepository;
     private final ServiceProviderRepository serviceProviderRepository;
+    private final RequestInspectionRepository requestInspectionRepository;
 
     // get all users
     public List<UserDTOOUT> getAllUsers(){
@@ -120,13 +123,28 @@ public class UserService {
             throw new ApiException("ServiceProvider not found");
         }
 
-        if (!status.equalsIgnoreCase("Active") && !status.equalsIgnoreCase("Inactive"))
-        {throw new ApiException("Invalid status");}
-
+        if (!status.equalsIgnoreCase("Approved") && !status.equalsIgnoreCase("Rejected")) {
+            throw new ApiException("Invalid status");
+        }
         serviceProvider.setStatus(status);
+            if (rejectionReason == null || rejectionReason.trim().isEmpty()) {
+                throw new ApiException("Rejection reason must be provided when rejecting an engineer");
+        }
+        serviceProvider.setRejectionReason(rejectionReason);
         serviceProviderRepository.save(serviceProvider);
     }
 
 
+    // Endpoint No.
+    // user will display requestsInceptions that he owns()
+    public List<RequestInspection> getAllRequestForOneUser(Integer userId){
+     List<RequestInspection> requestInspections = requestInspectionRepository.findAllRequestForOneUser(userId);
+     if(requestInspections==null){
+         throw new ApiException("No requests found");
+     }
+     return requestInspections;
+    }
 
-}
+
+
+ }

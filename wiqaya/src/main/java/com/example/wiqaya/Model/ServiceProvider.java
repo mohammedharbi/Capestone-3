@@ -31,7 +31,7 @@ private String phoneNumber;
     @Column(columnDefinition = "varchar(10) not null")
     private String commercialRegistration;
 
-   @Pattern(regexp = "^(UnderReview|Approved|Rejected)$", message = "Service provider status must be either 'Active' or 'Inactive'")
+   @Pattern(regexp = "^(UnderReview|Approved|Rejected)$", message = "Service provider status must be either UnderReview|Approved|Rejected")
     @Column(columnDefinition = "varchar(11) ")
 private String status;
 
@@ -44,10 +44,11 @@ private Integer doneOrdersNum;
  @Column(columnDefinition = "decimal not null")
 private Double averageRating;
 
+
     @OneToMany(cascade = CascadeType.ALL,mappedBy ="serviceProvider" )
     private Set<Offer> Offer;
 
     @OneToMany(cascade = CascadeType.ALL,mappedBy ="serviceProvider" )
-    private Set<Review> Review;
+    private Set<Review> reviews;
 
 }

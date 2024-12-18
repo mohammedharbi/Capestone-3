@@ -61,4 +61,11 @@ public class UserController {
         return ResponseEntity.status(200).body(new ApiResponse("Provider is active now!"));
     }
 
+    // Endpoint No.
+    // get All Request For One User using user id
+    @GetMapping("/display-all-requests-by-user-id/{id}")
+    public ResponseEntity<?> getAllRequestForOneUser(@PathVariable Integer id){
+        return ResponseEntity.status(200).body(userService.getAllRequestForOneUser(id));
+    }
+
 }

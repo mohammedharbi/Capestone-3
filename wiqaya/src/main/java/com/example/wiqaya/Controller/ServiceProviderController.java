@@ -35,7 +35,7 @@ public class ServiceProviderController {
     }
 
     @GetMapping("/check-my-status-service-provider/service-provider/{providerId}")
-    public ResponseEntity checkMyStatus(@PathVariable Integer providerId){
+    public ResponseEntity<?> checkMyStatus(@PathVariable Integer providerId){
         String response = serviceProviderService.checkMyStatusServiceProvider(providerId);
         return ResponseEntity.status(200).body(response);
     }

@@ -12,6 +12,7 @@ public interface ReportRepository extends JpaRepository<Report,Integer> {
 
     Report findReportById(Integer id);
 
-    @Query("select r from Report r where r.isPublished=true and r.house.city=?2")
+    @Query("select r from Report r where r.isPublished=true and r.house.city=?1")
     List<Report> findAllByIsPublishedAndCity(String city);
+
 }

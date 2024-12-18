@@ -75,6 +75,7 @@ public class HouseService {
         userRepository.save(user);
     }
 
+
     public List<House> findHouseByConditionPercentageLessThan(Integer adminId,Integer conditionPercentage){
         User admin = userRepository.findUserById(adminId);
         if(admin==null){throw new ApiException("User not found");}

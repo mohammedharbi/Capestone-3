@@ -46,7 +46,6 @@ public class OfferController {
     public ResponseEntity sendOffer(@PathVariable Integer providerid, @PathVariable Integer reportid,@Valid @RequestBody OfferDTOIN offerDTOIN){
         offerService.sendOffer(providerid,reportid,offerDTOIN);
        return ResponseEntity.status(200).body(new ApiResponse("offer sent to report id: "+reportid));
-
-
     }
+
 }
