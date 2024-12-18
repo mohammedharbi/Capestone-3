@@ -71,6 +71,8 @@ public class ReportService {
         house.setConditionPercentage(percentage);
         // add set for status
        house.setStatus("checked");
+       //change request to Reported
+        requestInspection.setStatus("Reported");
 
         Report report = new Report(
                 null, // ID
