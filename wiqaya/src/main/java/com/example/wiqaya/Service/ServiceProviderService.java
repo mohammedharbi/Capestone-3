@@ -64,7 +64,7 @@ private final ReportRepository reportRepository;
     public void add(ServiceProviderDTOIN serviceProviderDTOIN){
         ServiceProvider serviceProvider = new ServiceProvider(null,
                 serviceProviderDTOIN.getName(),serviceProviderDTOIN.getEmail(), serviceProviderDTOIN.getPhoneNumber(),
-                serviceProviderDTOIN.getCommercialRegistration(),"Inactive",0,0.0,null,null);
+                serviceProviderDTOIN.getCommercialRegistration(),"UnderReview","",0,0.0,null,null);
         serviceProviderRepository.save(serviceProvider);
     }
 
@@ -116,6 +116,27 @@ private final ReportRepository reportRepository;
             }
         }
         return reportDTOOUTS;
+    }
+
+    public String checkMyStatusServiceProvider(Integer id) {
+        ServiceProvider serviceProvider = serviceProviderRepository.findServiceProviderById(id);
+
+        if(serviceProvider==null) {
+            throw new ApiException("serviceProvider not found");
+        }
+
+        // Get the status and rejection reason
+        String status = serviceProvider.getStatus();
+        String rejectionReason = serviceProvider.getRejectionReason();
+
+        // Check the status and return the appropriate response
+        if ("approved".equalsIgnoreCase(status)) {
+            return  status + " Congrats !" ;
+        } else if ("rejected".equalsIgnoreCase(status)) {
+            return "Rejected: " + rejectionReason;
+        } else {
+            return "Status: " + status;
+        }
     }
 
 
