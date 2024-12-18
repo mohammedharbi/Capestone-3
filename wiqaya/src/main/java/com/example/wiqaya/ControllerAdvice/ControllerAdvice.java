@@ -5,6 +5,7 @@ import com.example.wiqaya.ApiResponse.ApiResponse;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.converter.HttpMessageNotWritableException;
@@ -106,6 +107,12 @@ public class ControllerAdvice {
 
     @ExceptionHandler(value = ConcurrentModificationException.class)
     public ResponseEntity<?> ConcurrentModificationException(ConcurrentModificationException e){
+        String msg = e.getMessage();
+        return ResponseEntity.status(400).body(msg);
+    }
+
+    @ExceptionHandler(value = InvalidDataAccessApiUsageException.class)
+    public ResponseEntity<?> InvalidDataAccessApiUsageException(InvalidDataAccessApiUsageException e){
         String msg = e.getMessage();
         return ResponseEntity.status(400).body(msg);
     }

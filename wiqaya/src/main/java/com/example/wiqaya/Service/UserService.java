@@ -37,7 +37,7 @@ public class UserService {
 
     // add new user
     public void addUser(UserDTOIN userDTOIN){
-       User user = new User(null,userDTOIN.getName(),userDTOIN.getEmail(),userDTOIN.getPhoneNumber(),userDTOIN.getUsername(),userDTOIN.getPassword(),"user",null);
+       User user = new User(null,userDTOIN.getName(),userDTOIN.getEmail(),userDTOIN.getPhoneNumber(),userDTOIN.getUsername(),userDTOIN.getPassword(),"user",null,null);
        userRepository.save(user);
     }
 

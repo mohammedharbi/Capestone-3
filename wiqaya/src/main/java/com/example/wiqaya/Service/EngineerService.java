@@ -3,7 +3,9 @@ package com.example.wiqaya.Service;
 import com.example.wiqaya.ApiResponse.ApiException;
 import com.example.wiqaya.DTO.OUT.EngineerDTOOUT;
 import com.example.wiqaya.Model.Engineer;
+import com.example.wiqaya.Model.RequestInspection;
 import com.example.wiqaya.Repository.EngineerRepository;
+import com.example.wiqaya.Repository.RequestInspectionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,7 @@ import java.util.List;
 public class EngineerService {
 
     private final EngineerRepository engineerRepository;
+    private final RequestInspectionRepository requestInspectionRepository;
 
 
     public List<EngineerDTOOUT> getAllEngineers() {
@@ -79,4 +82,12 @@ public class EngineerService {
 
     // Endpoint No.6
     // Eng get all the request Inspection that assign to him
+    public List<RequestInspection> getAllRequestInspectionByEngId(Integer id){
+     if(!engineerRepository.existsById(id)){
+         throw new ApiException("Engineer not found");
+     }
+      List<RequestInspection> engRequests = requestInspectionRepository.findRequestInspectionByEngineerId(id);
+      return engRequests.isEmpty()? null:engRequests;
+    }
+
 }

@@ -31,7 +31,7 @@ public class ReportService {
         List<ReportDTOOUT> dtos=new ArrayList<>();
         for(Report r:reports){
             ReportDTOOUT reportDTOOUT =new ReportDTOOUT(r.getId(),r.getEngineer().getId(),r.getStructuralElements(),r.getFireDetection(),r.getHeatingCookingSystems(),r.getEmergencyPreparedness(),r.getVentilationSmokeManagement()
-                    ,r.getExteriorSurroundings(),r.getPercentage(),r.getNotes(),r.getRequiredItems(),r.getReportedDate());
+                    ,r.getExteriorSurroundings(),r.getPercentage(),r.getNotes(),r.getRequiredItems(),r.getReportedDate(),r.getHouse().getCity());
             dtos.add(reportDTOOUT);
         }
         return  dtos;
@@ -97,7 +97,6 @@ public class ReportService {
         // Save the report to the database
         reportRepository.save(report);
     }
-
 
     // delete report
     public void delete(Integer id){

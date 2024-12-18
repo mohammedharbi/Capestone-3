@@ -1,14 +1,12 @@
 package com.example.wiqaya.Model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -50,8 +48,8 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL , mappedBy = "user")
     private Set<House> houses;
 
-    // one User can have many Review "Set of reviews"
-//    @OneToMany(cascade = CascadeType.ALL , mappedBy = "user")
-//    private Set<Review> reviews;
+//     one User can have many Review "Set of reviews"
+    @OneToMany(cascade = CascadeType.ALL , mappedBy = "user")
+    private Set<Review> reviews;
 
 }

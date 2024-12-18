@@ -39,4 +39,12 @@ public class ServiceProviderController {
         String response = serviceProviderService.checkMyStatusServiceProvider(providerId);
         return ResponseEntity.status(200).body(response);
     }
+
+    // Endpoint No.
+    //Service provider will be able to display all reporters if it’s publish and in the same city
+    @GetMapping("/provider-display-publish-reports/provider-id/{id}/city/{city}")
+    public ResponseEntity<?> ProviderGetPublishedReport(@PathVariable Integer id,@PathVariable String city){
+        return ResponseEntity.status(200).body(serviceProviderService.ProviderGetPublishedReport(id,city));
+    }
+
 }

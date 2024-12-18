@@ -28,18 +28,13 @@ public class ReportDTOIN {
 
     private Boolean  electricalDange;
 
-
     private Boolean  heatingCookingSystems;
-
 
     private Boolean  emergencyPreparedness;
 
-
     private Boolean  hazardousMaterialsStorage;
 
-
     private Boolean  ventilationSmokeManagement;
-
 
     private Boolean  exteriorSurroundings;
 

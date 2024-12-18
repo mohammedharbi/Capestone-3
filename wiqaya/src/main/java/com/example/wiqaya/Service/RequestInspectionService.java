@@ -105,7 +105,7 @@ public class RequestInspectionService {
 //            throw new ApiException("engineers not found");
 //        }
 
-    //flow 1
+        //flow 1
 //        List<Engineer> availableEngineers = new ArrayList<>();
 //        for (Engineer engineer : engineers) {
 //            Integer requestsForDate = requestInspectionRepository.countByEngineerAndDate(engineer, date);
@@ -113,27 +113,27 @@ public class RequestInspectionService {
 //                availableEngineers.add(engineer);
 //            }
 //        }
-    //flow 2
+        //flow 2
 
-    // Endpoint No.2
+        // Endpoint No.2
     // admin can check the availability on specifies day (Integer day) not working
-    public List<Engineer> getAvailableEngineersForDate(LocalDate date) {
-        if (date == null) {
-            throw new IllegalArgumentException("Date cannot be null");
+        public List<Engineer> getAvailableEngineersForDate(LocalDate date) {
+            if (date == null) {
+                throw new IllegalArgumentException("Date cannot be null");
+            }
+
+            // Fetch available engineers using the custom repository query
+            List<Engineer> availableEngineers = engineerRepository.findAvailableEngineersForDate(date);
+
+            if (availableEngineers.isEmpty()) {
+                throw new ApiException("No available engineers found for the selected date");
+            }
+
+            return availableEngineers;
         }
 
-        // Fetch available engineers using the custom repository query
-        List<Engineer> availableEngineers = engineerRepository.findAvailableEngineersForDate(date);
 
-        if (availableEngineers.isEmpty()) {
-            throw new ApiException("No available engineers found for the selected date");
-        }
-
-        return availableEngineers;
-    }
-
-
-    //flow 3
+        //flow 3
 //        List<Engineer> availableEngineers = new ArrayList<>();
 //        for (Engineer engineer : engineers) {
 //            Integer countEngineer = 0;

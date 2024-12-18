@@ -49,19 +49,18 @@ public class Engineer {
     private String accreditationNumber; // for example SCE-2024567890
 
     @Pattern(regexp = "^(UnderReview|Approved|Rejected)$", message = "Engineer status must be either UnderReview | Approved | Rejected")
-    @Column(columnDefinition = "varchar(11)")
+    @Column(columnDefinition = "varchar(20)")
     private String status ; // it will be Inactive by default therefore no need for @NotEmpty. the admin  will check the Engineer accreditation number then decide to active it or not
 
     @Column(nullable = true)
     private String rejectionReason;
 
     @Column(columnDefinition = "varchar(11) ")
-    private Boolean availability;
+    private Boolean availability = false;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "engineer")
     @JsonIgnore
     private Set<RequestInspection> requestInspections;
-
 
     @OneToMany(cascade = CascadeType.ALL,mappedBy ="engineer" )
     private Set<Report> reports;

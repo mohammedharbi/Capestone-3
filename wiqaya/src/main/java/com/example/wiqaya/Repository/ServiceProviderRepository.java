@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 public interface ServiceProviderRepository extends JpaRepository<ServiceProvider,Integer> {
  ServiceProvider findServiceProviderById(Integer id);
 
+
 }
