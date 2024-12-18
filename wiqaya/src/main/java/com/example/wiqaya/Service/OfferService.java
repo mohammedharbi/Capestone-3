@@ -23,8 +23,17 @@ public class OfferService {
     private final ServiceProviderRepository serviceProviderRepository;
     private final UserRepository userRepository;
 
-    public List<Offer> getAllOffers() {
-        return offerRepository.findAll();
+    public List<OfferDTOOUT> getAllOffers() {
+        List<Offer>offers=offerRepository.findAll();
+        if(offers.isEmpty() || offers==null)throw  new ApiException("there is no offers yet");
+
+        List<OfferDTOOUT> dtos=new ArrayList<>();
+        for(Offer o:offers){
+            OfferDTOOUT offerDTOOUT =new OfferDTOOUT(o.getId(),o.getDescription(),o.getStatus(),o.getPrice(),o.getServiceProvider().getId());
+            dtos.add(offerDTOOUT);
+        }
+
+        return  dtos;
     }
 
 
