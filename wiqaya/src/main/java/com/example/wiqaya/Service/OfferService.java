@@ -4,14 +4,8 @@ import com.example.wiqaya.ApiResponse.ApiException;
 import com.example.wiqaya.DTO.IN.OfferDTOIN;
 import com.example.wiqaya.DTO.OUT.OfferDTOOUT;
 import com.example.wiqaya.DTO.OUT.ReportDTOOUT;
-import com.example.wiqaya.Model.House;
-import com.example.wiqaya.Model.Offer;
-import com.example.wiqaya.Model.Report;
-import com.example.wiqaya.Model.ServiceProvider;
-import com.example.wiqaya.Repository.HouseRepository;
-import com.example.wiqaya.Repository.OfferRepository;
-import com.example.wiqaya.Repository.ReportRepository;
-import com.example.wiqaya.Repository.ServiceProviderRepository;
+import com.example.wiqaya.Model.*;
+import com.example.wiqaya.Repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +21,7 @@ public class OfferService {
     private final HouseRepository houseRepository;
     private final ReportRepository reportRepository;
     private final ServiceProviderRepository serviceProviderRepository;
+    private final UserRepository userRepository;
 
     public List<Offer> getAllOffers() {
         return offerRepository.findAll();
@@ -98,8 +93,23 @@ public class OfferService {
             dtos.add(offerDTOOUT);
         }
 
-
         return  dtos;
+    }
+
+
+    public void acceptOffer(Integer userid,Integer offerid){
+        //check user
+        User user=userRepository.findUserById(userid);
+        if(user==null)throw new ApiException("user not found");
+        //check offer if exist
+        Offer offer=offerRepository.findOfferById(offerid);
+        if(user==null)throw new ApiException("offer not found");
+
+        //check if the user own this report
+        Report report =reportRepository.findReportById(offer.getReport().getId());
+        House house=houseRepository.findHouseById(report.getHouse().getId());
+//        if()
+
 
     }
 
