@@ -66,5 +66,9 @@ public class HouseController {
         return ResponseEntity.status(200).body(houseService.getHousesByStatus(adminId,status));
     }
 
+    @GetMapping("/get-houses-avg-/{adminId}/{conditionPercentage}/{city}")
+    public ResponseEntity<?> getAllHouseAverageConditionPercentageByCity(@PathVariable Integer adminId,@PathVariable Integer conditionPercentage,@PathVariable String city){
+        return ResponseEntity.status(200).body(houseService.getAllHouseAverageConditionPercentageByCity(adminId,conditionPercentage,city));
+    }
 
 }

@@ -2,6 +2,7 @@ package com.example.wiqaya.Model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
@@ -50,6 +51,7 @@ private Double averageRating;
     private Set<Offer> Offer;
 
     @OneToMany(cascade = CascadeType.ALL,mappedBy ="serviceProvider" )
+    @JsonIgnore
     private Set<Review> reviews;
 
 }

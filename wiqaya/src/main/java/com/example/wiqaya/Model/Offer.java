@@ -28,8 +28,8 @@ public class Offer {
     @Positive
     @Column(columnDefinition = "double not null")
     private Double price;
-    @Pattern(regexp = "^(Accepted|Rejected|Pending)$")
-    @Column(columnDefinition = "varchar(8)")
+    @Pattern(regexp = "^(Accepted|Rejected|Pending|Completed)$")
+    @Column(columnDefinition = "varchar(10)")
     private String status= "Pending";
 
     @ManyToOne
@@ -39,6 +39,7 @@ public class Offer {
 
     // here  ,, many offers for one report
     @ManyToOne
+    @JsonIgnore
     private Report report;
 
 

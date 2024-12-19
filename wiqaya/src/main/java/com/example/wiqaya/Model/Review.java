@@ -1,13 +1,14 @@
 package com.example.wiqaya.Model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,10 +23,10 @@ public class Review {
     @Min(value = 1, message = "Rating must be at least 1")
     @Max(value = 5, message = "Rating cannot be more than 5")
     @Column(columnDefinition = "int not null")
-    private Integer rating;
+    private Double rating;
 
     @NotEmpty(message = "Comment cannot be empty")
-    @Max(value = 50 , message = "comment length can't be more than 50 characters")
+//    @Max(value = 50 , message = "comment length can't be more than 50 characters")
     @Column(columnDefinition = "varchar(50) not null")
     private String comment;
 
@@ -37,8 +38,8 @@ public class Review {
 
 
     @ManyToOne
-    @JsonIgnore
     @JoinColumn(name = "serviceprovider_id", referencedColumnName = "id")
+    @JsonIgnore
     private ServiceProvider serviceProvider;
 
 }

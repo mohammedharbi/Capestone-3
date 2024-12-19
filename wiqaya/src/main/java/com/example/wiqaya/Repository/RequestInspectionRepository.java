@@ -32,8 +32,6 @@ public interface RequestInspectionRepository extends JpaRepository<RequestInspec
     @Query("select r from RequestInspection  r where r.house.user.id=?1")
     List<RequestInspection> findAllRequestForOneUser(Integer id);
 
-    @Query("SELECT r FROM RequestInspection r WHERE r.house.id = :houseId AND r.status <> 'Reported'")
-    RequestInspection findActiveRequestForHouse( Integer houseId);
 
 
 }

@@ -62,6 +62,15 @@ public class RequestInspectionService {
     public void createRequestInspection(Integer user_id, Integer house_id, RequestInspectionDTOIN requestInspectionDTOIN) {
         House house = houseRepository.findHouseById(house_id);
         User user = userRepository.findUserById(user_id);
+
+        List<RequestInspection> requestInspections=requestInspectionRepository.findAllRequestForOneUser(user_id);
+        for(RequestInspection r:requestInspections){
+            if(r.getHouse().getId().equals(house_id)){
+                if(!r.getStatus().equalsIgnoreCase("Reported") && !r.getStatus().equalsIgnoreCase("cancelled"))
+                    throw new ApiException("there is a proccesing request in this house");
+            }
+        }
+
         if (house == null) {
             throw new ApiException("house not found");
         }
@@ -71,12 +80,6 @@ public class RequestInspectionService {
         if (!house.getUser().getId().equals(user_id)) {
             throw new ApiException("user doesn't own the house");
         }
-        RequestInspection existingRequest = requestInspectionRepository.findActiveRequestForHouse(house_id);
-        if (existingRequest != null) {
-            throw new ApiException("there is a processing request in this house");
-        }
-
-        if (getAvailableEngineersForDate(requestInspectionDTOIN.getDate()) == null) {throw new ApiException("there is no available engineers on this date please enter a new date");}
         RequestInspection requestInspection = new RequestInspection(null, requestInspectionDTOIN.getDate(), "Pending", null, house, null);
         requestInspectionRepository.save(requestInspection);
     }
@@ -144,14 +147,15 @@ public class RequestInspectionService {
         requestInspection.setEngineer(engineer);
         requestInspection.setStatus("AssignedToEnginner");
 
-        // Update house status
-        house.setStatus("pending_inspection");
+
 
 //        // Update engineer's list of inspections
 //        engineer.getRequestInspections().add(requestInspection);
 
         requestInspectionRepository.save(requestInspection);
         engineerRepository.save(engineer);
+        // Update house status
+        house.setStatus("pending_inspection");
         houseRepository.save(house);
 
     }

@@ -7,7 +7,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class ReviewDTOOUT {
 
-    private Integer rating;
+    private Double rating;
 
     private String comment;
 

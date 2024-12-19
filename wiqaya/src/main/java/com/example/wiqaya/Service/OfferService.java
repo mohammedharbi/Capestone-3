@@ -137,7 +137,10 @@ public class OfferService {
                 offerRepository.save(o);
             }
         }
-
+        report.setIsPublished(false);
+        reportRepository.save(report);
+        house.setStatus("inProgress");
+        houseRepository.save(house);
     }
 
 

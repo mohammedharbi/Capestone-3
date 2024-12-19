@@ -2,6 +2,7 @@ package com.example.wiqaya.Repository;
 
 import com.example.wiqaya.Model.ServiceProvider;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -12,5 +13,6 @@ public interface ServiceProviderRepository extends JpaRepository<ServiceProvider
 
  List<ServiceProvider> findServiceProviderByDoneOrdersNumGreaterThanEqual(Integer doneOrdersNum);
 
- List<ServiceProvider> findServiceProviderByAverageRatingGreaterThanEqual(Double averageRating);
+// @Query("select s from ServiceProvider s where s.averageRating>=?1")
+// List<ServiceProvider> findServiceProviderByAverageRatingGreaterThanEqual(Double averageRating);
 }

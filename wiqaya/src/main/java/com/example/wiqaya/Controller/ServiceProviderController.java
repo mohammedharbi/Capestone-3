@@ -55,8 +55,13 @@ public class ServiceProviderController {
     // Endpoint No.
     // user can display service provider depending on rating (Double rating )
     @GetMapping("/get-service-provider-by-rating/{rating}")
-    public ResponseEntity<?> getServiceProviderByRating(@PathVariable Double rating){
+    public ResponseEntity<?> getServiceProviderByRating(@PathVariable Integer rating){
      return ResponseEntity.status(200).body(serviceProviderService.getServiceProviderByRating(rating));
     }
 
+    @PutMapping("/complete-offer-ser-provider-id/{serProviderId}/offer-id/{offerId}")
+    public ResponseEntity<?> completeOffer(@PathVariable Integer serProviderId, @PathVariable Integer offerId){
+        serviceProviderService.completeOffer(serProviderId,offerId);
+        return ResponseEntity.status(200).body(new ApiResponse("Service provider installing safety items"));
+    }
 }

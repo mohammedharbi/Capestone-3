@@ -32,27 +32,15 @@ private final HouseRepository houseRepository;
         }
         List<ServiceProviderDTOOUT> serviceProviderDTOOUTS = new ArrayList<>();
         for (ServiceProvider s : serviceProviders) {
-            List<Review> reviews = reviewRepository.findAll();
             List<ReviewDTOOUT> reviewDTOOUTS = new ArrayList<>();
 
-            for (Review review : reviews) {
-                if (review.getServiceProvider().getId().equals(s.getId())) {
-                    ReviewDTOOUT reviewDTOOUT = new ReviewDTOOUT(
-                            review.getRating(),
-                            review.getComment(),
-                            review.getUser().getUsername()
-                    );
-                    reviewDTOOUTS.add(reviewDTOOUT);
-                }
-            }
             ServiceProviderDTOOUT serviceProviderDTOOUT = new ServiceProviderDTOOUT(
                     s.getName(),
                     s.getEmail(),
                     s.getPhoneNumber(),
                     s.getCommercialRegistration(),
                     s.getDoneOrdersNum(),
-                    s.getAverageRating(),
-                    reviewDTOOUTS
+                    s.getAverageRating()
             );
             serviceProviderDTOOUTS.add(serviceProviderDTOOUT);
         }
@@ -84,10 +72,15 @@ private final HouseRepository houseRepository;
     // Endpoint No.17
     //sara
     // user can display service provider depending on rating (Double rating )
-    public List<ServiceProvider> getServiceProviderByRating(Double rating){
-        List<ServiceProvider> providerWithRatingAbove = serviceProviderRepository.findServiceProviderByAverageRatingGreaterThanEqual(rating);
-        if(providerWithRatingAbove==null){
-            throw new ApiException("No service provider found");
+    public List<ServiceProvider> getServiceProviderByRating(Integer rating){
+        List<ServiceProvider> providerWithRatingAbove = new ArrayList<>();
+//        if(providerWithRatingAbove==null){
+//            throw new ApiException("No service provider found");
+//        }
+        for (ServiceProvider s : serviceProviderRepository.findAll()){
+          if(s.getAverageRating()>=rating){
+            providerWithRatingAbove.add(s);
+          }
         }
         return providerWithRatingAbove;
     }
@@ -191,7 +184,7 @@ private final HouseRepository houseRepository;
         offerRepository.save(offer);
 
         House house = offer.getReport().getHouse();
-        house.setStatus("Completed");
+        house.setStatus("completed");
         houseRepository.save(house);
 
         serviceProvider.setDoneOrdersNum(serviceProvider.getDoneOrdersNum() + 1);

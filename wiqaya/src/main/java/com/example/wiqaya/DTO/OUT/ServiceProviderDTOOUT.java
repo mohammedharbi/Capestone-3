@@ -28,5 +28,4 @@ public class ServiceProviderDTOOUT {
 
     private Double averageRating;
 
-    private List<ReviewDTOOUT> reviews;
 }
