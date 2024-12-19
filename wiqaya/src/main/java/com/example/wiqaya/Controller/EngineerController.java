@@ -55,4 +55,11 @@ public class EngineerController {
         return ResponseEntity.status(200).body(engineerService.getAllRequestInspectionByEngId(id));
     }
 
+    // Endpoint No.30
+    // get Eng reported houses number by eng id
+    @GetMapping("/get-reports-num-by-eng-id/{id}")
+    public ResponseEntity<?> getReportsNumByEngId(@PathVariable Integer id){
+        return ResponseEntity.status(200).body(engineerService.getReportsNumByEngId(id));
+    }
+
 }
